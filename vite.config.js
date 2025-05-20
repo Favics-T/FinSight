@@ -9,5 +9,5 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(),
   ],
-  base:"/FinSight"
+  base:"/FinSight/"
 })
