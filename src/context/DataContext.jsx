@@ -33,7 +33,7 @@ export const DataProvider = ({ children }) => {
 
   const searchStock = async (keyword) => {
     try {
-      const response = await searchStockSymbol(keyword);
+      const response = await handleStockSymbolSearch(keyword);
       setSearchResults(response.data.bestMatches || []);
     } catch (error) {
       console.error('Error searching stock:', error);

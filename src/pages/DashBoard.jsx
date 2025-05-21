@@ -1,7 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 import  DataContext  from '../context/DataContext'
+import { getStockQuote, getStockDaily, handleStockSymbolSearch } from "../services/stockAPI";
+
 
 const DashBoard = () => {
+
+const searchStock = async (keyword) => {
+    try {
+      const response = await searchStockSymbol(keyword);
+      setSearchResults(response.data.bestMatches || []);
+    } catch (error) {
+      console.error('Error searching stock:', error);
+    }
+  };
+
 
 const coinData =[
     {name : "S&P 500", price: "4,783.45", currency: "$", percentage:"+1.41%"},

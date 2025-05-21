@@ -4,6 +4,7 @@ import { FaChartLine } from "react-icons/fa6";
 import { CiStar } from "react-icons/ci";
 import { BsDisplayportFill } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
+import { Link } from 'react-router-dom'
 
 const SideBar = () => {
   const SideBarList = [
