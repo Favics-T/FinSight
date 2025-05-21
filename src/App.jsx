@@ -6,6 +6,9 @@ import Market from './pages/Market';
 import WatchList from './pages/WatchList';
 import Home from './pages/Home';
 import SideBar from './components/SideBar'
+import StockDashboard from './pages/StockDashboard';
+import CryptoDashboard from './pages/CryptoDashboard';
+import DashboardHeader from './components/DashboardHeader';
 
 
 const Layout = () => {
@@ -14,7 +17,8 @@ const Layout = () => {
       <Nav />
       <div className='flex flex-1 w-full '>
         <SideBar />
-       <div className=" flex-1">
+       <div className=" px-10 flex-1">
+        <DashboardHeader />
  <Outlet />
        </div>
        
@@ -37,7 +41,8 @@ const App = () => {
           <Route path="dashboard" element={<DashBoard />} />
           <Route path="market" element={<Market />} />
           <Route path="watchlist" element={<WatchList />} />
-          
+          <Route path='stockdashboard' element={<StockDashboard />} />
+          <Route path='cryptodashboard' element={<CryptoDashboard />}/>
         </Route>
       </Routes>
     </Router>

@@ -12,7 +12,8 @@ export const DataProvider = ({ children }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [stocksData, setStocksData] = useState([]);
+  
   const modeToggle = (button)=>{
       if(button.text === 'crypto'){
     setMode('crypto')
@@ -30,6 +31,21 @@ export const DataProvider = ({ children }) => {
       console.error('Error fetching stock quote:', error);
     }
   };
+
+  const fetchMultipleStockQuotes = async (symbols)=>{
+    try{
+      const results = {};
+
+      for(const symbol of symbols){
+        const response = await getStockQuote(symbol);
+        results[symbol] = response.data['Global Quote']
+      }
+      setStocksData(results)
+    }
+    catch(error){
+      console.error('error fetching data')
+    }
+  }
 
   const fetchStockDaily = async (symbol) => {
     try {
@@ -50,10 +66,10 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ setStockData,dailyData,
-                                 setDailyData, searchResults,
+    <DataContext.Provider value={{ setStockData,dailyData,modeToggle,
+                                 setDailyData, searchResults,fetchMultipleStockQuotes,
                                   setSearchResults, stockData,assetData, 
-                                  setAssetData, chartData, setChartData, 
+                                  setAssetData, chartData, setChartData,stocksData,setStocksData, 
                                   loading, setLoading, error, setError,mode,setMode,
                                   fetchStockDaily,fetchStockQuote,searchStock }}>
       {children}

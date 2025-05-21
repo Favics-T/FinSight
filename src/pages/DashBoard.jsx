@@ -3,12 +3,13 @@ import  DataContext  from '../context/DataContext'
 import { getStockQuote, getStockDaily, handleStockSymbolSearch } from "../services/stockAPI";
 import ToglleButton from '../components/ToglleButton';
 import { useToggle } from '../context/ToggleContext';
+import CryptoDashboard from './CryptoDashboard';
+import StockDashboard from './StockDashboard';
 
 
 const DashBoard = () => {
 
   // const[mode, setMode] = useState('crypto')
-
 const searchStock = async (keyword) => {
     try {
       const response = await searchStockSymbol(keyword);
@@ -18,7 +19,6 @@ const searchStock = async (keyword) => {
     }
   };
 
-
 const coinData =[
     {name : "S&P 500", price: "4,783.45", currency: "$", percentage:"+1.41%"},
      {name : "Dow Jones", price: "45,783.45", currency: "$", percentage:"+1.41%"},
@@ -26,41 +26,28 @@ const coinData =[
      {name : "Russell 2000", price: "1,992.66", currency: "$", percentage:"+0.87%"}
 ]
 
-const { stockData, fetchStockQuote } = useContext(DataContext);
+const { stockData, fetchStockQuote,mode } = useContext(DataContext);
 const {toggleMode} = useToggle()
 
 useEffect(()=>{
     fetchStockQuote('AAPL')
 },[])
+
+console.log("Current mode:", mode);
   
 
 
   return (
-    <div className='px-10 py-10 '>
+    <div className=' py-10 '>
       <div className='flex flex-col gap-4 '>
 
         {/* Subheader section */}
-        <div className='flex justify-between w-full'>
-            <h1 className='font-semibold Inter text-2xl'>Dashboard</h1>
-            <button className='bg-blue-700 rounded-lg py-1 px-3 text-white'>Add Asset</button>
-
-        </div>
+        
 
         {/* Daily show */}
-        <div className='flex justify-between mt-8'>
-
-        {/* toggle button */}
-        <ToglleButton onClick={toggleMode}/>
-
-        {/* dail trends */}
-        <div className="grid grid-cols-5 gap-2 font-semibold ">
-            <h1 className='border border-gray-200 rounded flex items-center px-1 hover:bg-blue-100'>1D</h1>
-             <h1 className='border border-gray-200 rounded flex items-center px-1 hover:bg-blue-100'>1W</h1>
-             <h1 className='border border-gray-200 rounded flex items-center px-1 hover:bg-blue-100'>1M</h1>
-             <h1 className='border border-gray-200 rounded flex items-center px-1 hover:bg-blue-100'>1Y</h1>
-             <h1 className='border border-gray-200 rouunded flex items-center px-1 hover:bg-blue-100'>All</h1>
-        </div>
-        </div>
+        
+        
+       
 
         {/* money s&p */}
         <div className='grid grid-cols-4 gap-4'>
@@ -83,7 +70,7 @@ useEffect(()=>{
         </div>
 
         {/* stock performence */}
-        <div className='grid grid-cols-2 gap-6'>
+         <div className='grid grid-cols-2 gap-6'>
             <div className='border p-8 shadow border-gray-300 flex flex-col gap-10'>
                 <h1 className='font-semibold text-3xl'>Crypto Performance</h1> 
 
@@ -100,14 +87,14 @@ useEffect(()=>{
             <div></div>
             </div>
 
-        </div>
+        </div> 
 
 
-      </div>
+      
 
 
 
-      <div>
+      {/* <div>
       {stockData ? (
         <>
           <h2>{stockData['01. symbol']}</h2>
@@ -117,6 +104,10 @@ useEffect(()=>{
       ) : (
         <p>Loading stock data...</p>
       )}
+    </div> */}
+    <p>{mode} </p>
+    {/* {mode ==='crypto' ? <CryptoDashboard /> : <div>jjjj</div>} */}
+    
     </div>
     </div>
   )
