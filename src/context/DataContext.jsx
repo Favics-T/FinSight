@@ -7,11 +7,20 @@ export const DataProvider = ({ children }) => {
   const [stockData, setStockData] = useState(null);
   const [dailyData, setDailyData] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
-
+  const [mode,setMode] = useState('crypto')
   const [assetData, setAssetData] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const modeToggle = (button)=>{
+      if(button.text === 'crypto'){
+    setMode('crypto')
+      }
+      else{
+        setMode('stock')
+      }
+  }
 
       const fetchStockQuote = async (symbol) => {
     try {
@@ -45,7 +54,7 @@ export const DataProvider = ({ children }) => {
                                  setDailyData, searchResults,
                                   setSearchResults, stockData,assetData, 
                                   setAssetData, chartData, setChartData, 
-                                  loading, setLoading, error, setError,
+                                  loading, setLoading, error, setError,mode,setMode,
                                   fetchStockDaily,fetchStockQuote,searchStock }}>
       {children}
     </DataContext.Provider>

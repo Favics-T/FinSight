@@ -1,9 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import  DataContext  from '../context/DataContext'
 import { getStockQuote, getStockDaily, handleStockSymbolSearch } from "../services/stockAPI";
+import ToglleButton from '../components/ToglleButton';
+import { useToggle } from '../context/ToggleContext';
 
 
 const DashBoard = () => {
+
+  // const[mode, setMode] = useState('crypto')
 
 const searchStock = async (keyword) => {
     try {
@@ -23,7 +27,7 @@ const coinData =[
 ]
 
 const { stockData, fetchStockQuote } = useContext(DataContext);
-
+const {toggleMode} = useToggle()
 
 useEffect(()=>{
     fetchStockQuote('AAPL')
@@ -45,11 +49,8 @@ useEffect(()=>{
         {/* Daily show */}
         <div className='flex justify-between mt-8'>
 
-        {/* stock n crpto */}
-        <div className='bg-blue-100 py-2 px-3 items-center rounded flex gap-1'>
-            <h1 className='bg-white px-1 py-0.5 font-semibold text-sm rounded'>Stocks</h1>
-            <h1 className='text-gray-500 font-semibold px-2 text-sm'>Crypto</h1>
-        </div>
+        {/* toggle button */}
+        <ToglleButton onClick={toggleMode}/>
 
         {/* dail trends */}
         <div className="grid grid-cols-5 gap-2 font-semibold ">

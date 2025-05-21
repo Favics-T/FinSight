@@ -1,23 +1,31 @@
 import React, { useContext, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import DataContext from '../context/DataContext';
-import SearchContext from '../context/SearchContext';
+
+import { useSearch } from "../context/SearchContext";
+import { useToggle } from '../context/ToggleContext';
 
 const SearchBar = () => {
   const [input, setInput] = useState('');
   
   const [view, setView] = useState(false);
-  const {error,setError,searchResults,handleStockSearch,loading} = useContext(SearchContext);
-
-
+  const {error,setError,hanndleCryptoSearch,searchResults,handleStockSearch,loading} = useSearch();
+  const { mode } = useToggle();
+  
   
 
   
   const handleSearch = () => {
     if (input.trim()) {
-      handleStockSearch(input);
+      if(mode === 'stock'){
+          handleStockSearch(input);
+      }
+     else{
+      hanndleCryptoSearch(input);
+     }
       setView(true); 
-    } else {
+    } 
+    else {
       setView(false);
     }
   };
@@ -30,6 +38,7 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full max-w-md">
+      
       <label className="relative block">
         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer" onClick={handleSearch}>
           <CiSearch />
