@@ -13,6 +13,8 @@ export const handleStockSymbolSearch = (keywords) => {
   });
 }
 
+// console.log('API KEY',API_KEY)
+
 export const getStockQuote = (symbol)=>{
   return axios.get(BASE_URL, {
     params : {

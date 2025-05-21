@@ -40,8 +40,6 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-
-
   return (
     <DataContext.Provider value={{ setStockData,dailyData,
                                  setDailyData, searchResults,
