@@ -30,6 +30,16 @@ const SearchBar = () => {
     }
   };
 
+  const handleSelect = () => {
+  setInput('');
+  setView(false);
+};
+
+const highlightMatch = (text) => {
+  const regex = new RegExp(`(${input})`, 'i');
+  return text.replace(regex, '<mark>$1</mark>');
+};
+
   // const handleInputChange = (e) => {
   //   setInput(e.target.value);
   //   if (!view) setView(true); 
@@ -59,25 +69,45 @@ const SearchBar = () => {
           }}
         />
       </label>
+     
+     
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
      {view && searchResults && searchResults.length > 0 && (
   <div className='absolute bg-white border border-gray-300 rounded-md mt-1 w-full max-h-96 overflow-auto z-10 shadow-lg'>
     {mode === 'stock' ? (
       searchResults.map((result, index) => (
-        <div key={index} className='p-2 hover:bg-gray-200 cursor-pointer'>
+        <Link 
+        onClick={handleSelect}
+        key={index}
+        to={`/stock/${result['1. symbol']}`}
+        className='p-2 hover:bg-gray-200 cursor-pointer block'
+        >
+           <span
+                    dangerouslySetInnerHTML={{
+                      __html: highlightMatch(`${result['2. name']} (${result['1. symbol']})`)
+                    }}
+                  />
+        <div  className='p-2 hover:bg-gray-200 cursor-pointer'>
           {result['2. name']} ({result['1. symbol']})
         </div>
+        </Link>
       ))
     ) : (
       searchResults.map((coin) => (
         <Link
+        onClick={handleSelect}
           to={`/crypto/${coin.id}`}
           key={coin.id}
           className='p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2'
         >
           <img src={coin.thumb} alt={coin.name} className='w-5 h-5' />
-          <span>{coin.name} ({coin.symbol.toUpperCase()})</span>
+          <span
+                    dangerouslySetInnerHTML={{
+                      __html: highlightMatch(`${coin.name} (${coin.symbol.toUpperCase()})`)
+                    }}
+                  />
+          {/* <span>{coin.name} ({coin.symbol.toUpperCase()})</span> */}
         </Link>
       ))
     )}
