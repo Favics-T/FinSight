@@ -1,28 +1,28 @@
-# 📊 FinSight – Real-Time Financial Dashboard
+# FinSight –  Financial Dashboard for stock and crypto market
 
 FinSight is a real-time financial dashboard built with React and Chart.js that lets you monitor stock and cryptocurrency prices, trends, and key market metrics in one place. Designed for ease of use and responsiveness, it's ideal for analysts, investors, or anyone who wants to stay updated on the market.
 
 ## 🚀 Features
 
-- 🔍 **Search Bar with Autocomplete**  
+-  **Search Bar with Autocomplete**  
   Search for stocks and cryptocurrencies with live suggestions as you type.
 
-- 💰 **Crypto Price Display**  
+-  **Crypto Price Display**  
   See current price, 24-hour change, market cap, and trading volume using the CoinGecko API.
 
-- 📈 **Line Chart Visualization**  
+-  **Line Chart Visualization**  
   View a 7-day price trend for any selected asset using Chart.js.
 
-- 🌙 **Dark Mode Toggle**  
+-  **Dark Mode Toggle**  
   Switch between light and dark themes for a better viewing experience.
 
-- 🔄 **Currency Converter (Optional)**  
+-  **Currency Converter (Optional)**  
   Convert crypto prices to multiple fiat currencies.
 
-- ⚖️ **Asset Comparison (Optional)**  
+-  **Asset Comparison (Optional)**  
   Compare the trends of two or more assets on a single chart.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: React + Vite
 - **Styling**: Tailwind CSS
