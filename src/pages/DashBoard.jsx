@@ -50,7 +50,7 @@ console.log("Current mode:", mode);
        
 
         {/* money s&p */}
-        <div className='grid grid-cols-4 gap-4'>
+        <div className='grid md:grid-cols-4 grid:cols-2 gap-4'>
             {
                 coinData.map((list, index)=>( 
                     <div className='shadow py-6 px-4 flex gap-6  border rounded-lg border-gray-200 flex-col' >

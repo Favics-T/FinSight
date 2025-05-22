@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import DataContext from '../context/DataContext';
-
+import { Link } from 'react-router-dom';
 import { useSearch } from "../context/SearchContext";
 import { useToggle } from '../context/ToggleContext';
 
@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [input, setInput] = useState('');
   
   const [view, setView] = useState(false);
-  const {error,setError,hanndleCryptoSearch,searchResults,handleStockSearch,loading} = useSearch();
+  const {error,setError,handleCryptoSearch,searchResults,handleStockSearch,loading} = useSearch();
   const { mode } = useToggle();
   
   
@@ -21,7 +21,7 @@ const SearchBar = () => {
           handleStockSearch(input);
       }
      else{
-      hanndleCryptoSearch(input);
+      handleCryptoSearch(input);
      }
       setView(true); 
     } 
@@ -61,15 +61,29 @@ const SearchBar = () => {
       </label>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {view && searchResults && searchResults.length > 0 && (
-        <div className='absolute bg-white border border-gray-300 rounded-md mt-1 w-full max-h-96 overflow-auto z-10 shadow-lg'>
-          {searchResults.map((result, index) => (
-            <div key={index} className='p-2 hover:bg-gray-200 cursor-pointer'>
-              {result ['2. name']} ({result['1. symbol']})
-            </div>
-          ))}
+     {view && searchResults && searchResults.length > 0 && (
+  <div className='absolute bg-white border border-gray-300 rounded-md mt-1 w-full max-h-96 overflow-auto z-10 shadow-lg'>
+    {mode === 'stock' ? (
+      searchResults.map((result, index) => (
+        <div key={index} className='p-2 hover:bg-gray-200 cursor-pointer'>
+          {result['2. name']} ({result['1. symbol']})
         </div>
-      )}
+      ))
+    ) : (
+      searchResults.map((coin) => (
+        <Link
+          to={`/crypto/${coin.id}`}
+          key={coin.id}
+          className='p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2'
+        >
+          <img src={coin.thumb} alt={coin.name} className='w-5 h-5' />
+          <span>{coin.name} ({coin.symbol.toUpperCase()})</span>
+        </Link>
+      ))
+    )}
+  </div>
+)}
+
     </div>
   );
 };

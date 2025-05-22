@@ -1,21 +1,22 @@
 import React from 'react'
 import ToglleButton from './ToglleButton'
+import { Link } from 'react-router-dom'
 
 const DashboardHeader = () => {
 
     const dailyTrends = ['1D', '1M', '1Y','All']
   return (
     <div className=' py-6 '>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col  gap-4'>
         {/* subheader div */}
-        <div className='flex justify-between w-full'>
-            <h1 className='font-semibold Inter text-2xl'>Dashboard</h1>
+        <div className='flex flex-col md:flex-row md:justify-between w-full'>
+           <Link to='/dashboard'> <h1 className='font-semibold Inter text-2xl'>Dashboard</h1></Link>
             <button className='bg-blue-700 rounded-lg py-1 px-3 text-white'>Add Asset</button>
 
         </div>
 
         {/* toggle button and daily trend */}
-        <div className='flex justify-between mt-4'>
+        <div className='flex md:flex-row flex-col gap-4 justify-between mt-4'>
             <ToglleButton />
 
             <div className='grid grid-cols-4 gap-2 font-semibold '>

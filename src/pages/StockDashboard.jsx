@@ -18,7 +18,7 @@ const StockDashboard = () => {
 
   return (
     <div>
-      <div className='grid grid-cols-4 gap-4'>
+      <div className='grid md:grid-cols-4 gap-4'>
         {Object.entries(stocksData).map(([symbol, data]) => {
           // Check if data for a symbol is missing
           if (!data) {

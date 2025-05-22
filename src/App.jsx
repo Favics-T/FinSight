@@ -9,7 +9,7 @@ import SideBar from './components/SideBar'
 import StockDashboard from './pages/StockDashboard';
 import CryptoDashboard from './pages/CryptoDashboard';
 import DashboardHeader from './components/DashboardHeader';
-
+import CryptoDetail from './pages/CryptoDetail';
 
 const Layout = () => {
   return (
@@ -43,6 +43,7 @@ const App = () => {
           <Route path="watchlist" element={<WatchList />} />
           <Route path='stockdashboard' element={<StockDashboard />} />
           <Route path='cryptodashboard' element={<CryptoDashboard />}/>
+          <Route path="/crypto/:id" element={<CryptoDetail />} />
         </Route>
       </Routes>
     </Router>
