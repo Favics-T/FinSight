@@ -2,7 +2,7 @@
 
 FinSight is a real-time financial dashboard built with React and Chart.js that lets you monitor stock and cryptocurrency prices, trends, and key market metrics in one place. Designed for ease of use and responsiveness, it's ideal for analysts, investors, or anyone who wants to stay updated on the market.
 
-## 🚀 Features
+##  Features
 
 -  **Search Bar with Autocomplete**  
   Search for stocks and cryptocurrencies with live suggestions as you type.
@@ -31,11 +31,13 @@ FinSight is a real-time financial dashboard built with React and Chart.js that l
   - [CoinGecko API](https://www.coingecko.com/en/api)
   - [Alpha Vantage API](https://www.alphavantage.co/documentation/) (for stocks)
 
-## 📱 Responsive Design
+##  Responsive Design
 
 Fully responsive layout optimized for both mobile and desktop devices.
 
-## 📦 Installation
+other dependencies used - chart js and react chart js-2
+
+##  Installation
 
 ```bash
 git clone https://github.com/your-username/finSight.git

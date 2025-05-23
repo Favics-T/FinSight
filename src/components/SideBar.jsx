@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const SideBar = () => {
   const SideBarList = [
-    { title: "Dashboard", icon: <MdDashboard /> },
+    { title: "Dashboard", icon: <MdDashboard />,path:"/dashboard" },
     { title: "Market", icon: <FaChartLine /> },
     { title: "WatchList", icon: <CiStar /> },
     { title: "Portfolio", icon: <BsDisplayportFill /> },
@@ -16,7 +16,7 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="border flex hidden md:block  border-gray-300 w-[19%] h-screen px-5 py-9">
+    <div className="border  hidden md:block  border-gray-300 w-[19%] h-screen px-5 py-9">
       <div className="space-y-4">
         {SideBarList.map((item, index) => (
           <div

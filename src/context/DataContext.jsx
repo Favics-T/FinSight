@@ -14,14 +14,7 @@ export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [stocksData, setStocksData] = useState([]);
   
-  const modeToggle = (button)=>{
-      if(button.text === 'crypto'){
-    setMode('crypto')
-      }
-      else{
-        setMode('stock')
-      }
-  }
+ 
 
       const fetchStockQuote = async (symbol) => {
     try {
@@ -43,6 +36,7 @@ export const DataProvider = ({ children }) => {
       setStocksData(results)
     }
     catch(error){
+      setError('Error fetching data, turn off your airplane mode')
       console.error('error fetching data')
     }
   }
@@ -62,11 +56,12 @@ export const DataProvider = ({ children }) => {
       setSearchResults(response.data.bestMatches || []);
     } catch (error) {
       console.error('Error searching stock:', error);
+      setError('Stock not found')
     }
   };
 
   return (
-    <DataContext.Provider value={{ setStockData,dailyData,modeToggle,
+    <DataContext.Provider value={{ setStockData,dailyData,
                                  setDailyData, searchResults,fetchMultipleStockQuotes,
                                   setSearchResults, stockData,assetData, 
                                   setAssetData, chartData, setChartData,stocksData,setStocksData, 

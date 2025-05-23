@@ -10,6 +10,7 @@ const Nav = () => {
 
 const { stockData, fetchStockQuote,searchStock } = useContext(DataContext);
 const [search, setSearch] = useState("");
+const [view, setView] = useState(false)
 
 
 
@@ -17,9 +18,9 @@ const [search, setSearch] = useState("");
 
 
   return (
-    <div>
+    <div className='relative'>
      
-    <div className='px-10 font-sans  py-5 shadow-lg flex justify-between '>
+    <div className='md:px-10 px-4 font-sans md:py-5 py-2 shadow-lg flex justify-between '>
         
         <div className='flex gap-2 items-center  '>
             <FaChartLine className='text-xl'/>
@@ -28,30 +29,45 @@ const [search, setSearch] = useState("");
  {/* Logo */}
        
         {/* list */}
-    <div className='flex items-center gap-4'>
-
-{/* search icon */}
-       {/* <label className="relative block w-full max-w-md">
-  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-    <CiSearch />
-  </span>
-  <input
-    type="text"
-    value={search}
-    onChange={(e)=> setSearch(e.target.value)}
-    placeholder="Search"
-    className="w-full pl-10 pr-4 py-2  border border-gray-400 rounded-[15px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-</label> */}
-<SearchBar />
-<MdOutlineDarkMode className='text-3xl'/>
-<IoMdNotifications className='text-3xl'/>
-<div className=' p-5 rounded-full bg-gray-200'>
+    <div className='md:block hidden '>
+<ol className='flex items-center gap-4'>
+<SearchBar className='inline'/>
+<MdOutlineDarkMode className='text-3xl '/>
+<IoMdNotifications className='text-3xl '/>
+<div className=' p-5 rounded-full bg-gray-200 '>
 <img src="" alt="" />
 </div>
+</ol>
+
+
+        </div>
+
+        <div className='md:hidden block' onClick={()=>setView(!view)}>
+            <p>--</p>
+           
         </div>
         
     </div>
+
+     {
+              view &&(
+                <div>
+                  <div className='absolute right-0 md:hidden'>
+<ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-black text-white  px-6 items-center gap-4'>
+{/* <SearchBar className=''/> */}
+<div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
+<img src="" alt="" />
+</div>
+<MdOutlineDarkMode className='md:text-3xl text-sm '/>
+<IoMdNotifications className='md:text-3xl text-sm '/>
+
+</ol>
+
+
+        </div>
+                </div>
+              )
+            }
     </div>
   )
 }

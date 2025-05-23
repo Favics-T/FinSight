@@ -9,9 +9,9 @@ const DashboardHeader = () => {
     <div className=' py-6 '>
       <div className='flex flex-col  gap-4'>
         {/* subheader div */}
-        <div className='flex flex-col md:flex-row md:justify-between w-full'>
+        <div className='flex   justify-between w-[100px] md:w-full'>
            <Link to='/dashboard'> <h1 className='font-semibold Inter text-2xl'>Dashboard</h1></Link>
-            <button className='bg-blue-700 rounded-lg py-1 px-3 text-white'>Add Asset</button>
+            <button className='bg-blue-700  rounded-lg py-1 px-3 text-white'>Add Asset</button>
 
         </div>
 

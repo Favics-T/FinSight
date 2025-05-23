@@ -18,7 +18,7 @@ const Layout = () => {
       <Nav />
       <div className='flex flex-1 w-full '>
         <SideBar />
-       <div className=" px-10 flex-1">
+       <div className=" md:px-10 px-2 flex-1">
         <DashboardHeader />
  <Outlet />
        </div>

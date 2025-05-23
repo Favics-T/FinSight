@@ -9,6 +9,17 @@ export const searchCoins = (query) => {
  
 };
 
+export const fetchCryptoMarketChart = (coinId = 'bitcoin') => {
+  return axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
+    params: {
+      vs_currency: 'usd',
+      days: 7,
+    },
+  });
+};
+
+
+
 //detailed market for specific coin
   export const fetchMarketData = (coinIds =['bitcoin','etherum','solana'])=>{
     return axios.get(`${BASE_URL}/coins/markets`,{

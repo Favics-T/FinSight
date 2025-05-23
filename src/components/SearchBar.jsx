@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
-import DataContext from '../context/DataContext';
 import { Link } from 'react-router-dom';
 import { useSearch } from "../context/SearchContext";
 import { useToggle } from '../context/ToggleContext';
 
 const SearchBar = () => {
   const [input, setInput] = useState('');
-  
-  const [view, setView] = useState(false);
-  const {error,setError,handleCryptoSearch,searchResults,handleStockSearch,loading} = useSearch();
+    const [view, setView] = useState(false);
+  const {error,handleCryptoSearch,searchResults,
+        handleStockSearch,loading} = useSearch();
   const { mode } = useToggle();
   
   
