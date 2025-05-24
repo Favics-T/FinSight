@@ -16,10 +16,10 @@ FinSight is a real-time financial dashboard built with React and Chart.js that l
 -  **Dark Mode Toggle**  
   Switch between light and dark themes for a better viewing experience.
 
--  **Currency Converter (Optional)**  
+-  **Currency Converter **  
   Convert crypto prices to multiple fiat currencies.
 
--  **Asset Comparison (Optional)**  
+-  **Asset Comparison **  
   Compare the trends of two or more assets on a single chart.
 
 ##  Tech Stack
