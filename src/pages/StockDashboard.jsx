@@ -1,8 +1,50 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import DataContext from '../context/DataContext';
+import { fetchExchangeRate, fetchStockPrice } from '../services/stockAPI';
+import StockBarChart from '../charts/StockBarChart';
 
 const StockDashboard = () => {
   const { stocksData, fetchMultipleStockQuotes } = useContext(DataContext);
+
+    const [exchangeRate, setExchangeRate] = useState(null)
+    const [stockPrice, setStockPrice] = useState(null);
+    const [convertedPrice, setConvertedPrice] = useState(null);
+    const [currency, setCurrency] = useState('EUR'); 
+  
+  //   useEffect(() => {
+  //   const fetchPriceAndConvert = async () => {
+  //     try {
+  //       const stockRes = await fetchStockPrice('AAPL');
+  //       const rawPrice = parseFloat(stockRes.data['Global Quote']['05. price']);
+  //       setStockPrice(rawPrice);
+  
+  //       const fxRes = await fetchExchangeRate('USD', currency);
+  //       const rate = parseFloat(fxRes.data['Realtime Currency Exchange Rate']['5. Exchange Rate']);
+  
+  //       const converted = rawPrice * rate;
+  //       setConvertedPrice(converted.toFixed(2)); 
+  //     } catch (error) {
+  //       console.error('Error fetching price or conversion rate:', error);
+  //     }
+  //   };
+  
+  //   fetchPriceAndConvert();
+  // }, [currency]); //if currency changes, this will run
+  
+  useEffect(() => {
+  const fetchRate = async () => {
+    try {
+      const fxRes = await fetchExchangeRate('USD', currency);
+      const rate = parseFloat(fxRes.data['Realtime Currency Exchange Rate']['5. Exchange Rate']);
+      setExchangeRate(rate);
+    } catch (error) {
+      console.error('Error fetching exchange rate:', error);
+    }
+  };
+
+  fetchRate();
+}, [currency]);
+
 
   useEffect(() => {
     const symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN'];
@@ -17,9 +59,35 @@ const StockDashboard = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col'>
+
+    <div className="mb-6">
+  <label className="block font-semibold mb-2">Convert Currency:</label>
+  <select
+    className="border px-3 py-2 rounded"
+    onChange={(e) => setCurrency(e.target.value)}
+    value={currency}
+  >
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="NGN">NGN</option>
+    <option value="GBP">GBP</option>
+  </select>
+
+  <p className="mt-2">AAPL Price (USD): ${stockPrice}</p>
+  <p>Converted Price ({currency}): {convertedPrice}</p>
+</div>
+
+
       <div className='grid md:grid-cols-4 gap-4'>
-        {Object.entries(stocksData).map(([symbol, data]) => {
+        {
+        !exchangeRate ? (
+          <p>Loading exchange rate...</p>):(
+        Object.entries(stocksData).map(([symbol, data]) => {
+
+          const priceUSD = parseFloat(data['05. price']);
+          const converted = exchangeRate ? (priceUSD * exchangeRate).toFixed(2):'....'
+          // const converted = (priceUSD * exchangeRate).toFixed(2);
           // Check if data for a symbol is missing
           if (!data) {
             return (
@@ -45,10 +113,17 @@ const StockDashboard = () => {
               <p>
                 Change: {data['09. change']} ({data['10. change percent']})
               </p>
+              <p>Price (USD): ${priceUSD}</p>
+              <p>Price ({currency}): {converted}</p>
+
             </div>
           );
-        })}
+        }))}
       </div>
+      <div className='border'>
+ <StockBarChart />
+      </div>
+     
     </div>
   );
 };

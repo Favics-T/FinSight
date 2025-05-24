@@ -13,12 +13,21 @@ const CryptoChart = ( {coinId} ) => {
             setChartData(data);
         });
     },[coinId])
-    return chartData ? <Line data={chartData} /> :<p>Loading chart...</p>
-  
-    return (    <div>
-      
-    </div>
-  )
+   
+    return (
+        <div>
+            {
+    chartData ? 
+   <div className=' '>
+ <Line
+ className='w-[]  '
+  data={chartData} />
+   </div>
+     :<p>Loading chart...</p>
+            }
+     </div>
+    )
+    
 }
 
 export default CryptoChart

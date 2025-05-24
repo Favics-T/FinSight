@@ -9,11 +9,11 @@ export const searchCoins = (query) => {
  
 };
 
-export const fetchCryptoMarketChart = (coinId = 'bitcoin') => {
+export const fetchCryptoMarketChart = (coinId = 'bitcoin',vsCurrency = 'usd', days= 7) => {
   return axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
     params: {
-      vs_currency: 'usd',
-      days: 7,
+      vs_currency: vsCurrency,
+      days,
     },
   });
 };

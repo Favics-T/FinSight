@@ -13,6 +13,27 @@ export const handleStockSymbolSearch = (keywords) => {
   });
 }
 
+export const fetchStockPrice = (symbol)=>{
+  return axios.get(BASE_URL,{
+    params:{
+      function:"GLOBAL_QUOTE",
+      symbol,
+      apikey:API_KEY
+    },
+  });
+};
+
+export const fetchExchangeRate = (fromCurrency = 'USD', toCurrency='EUR')=>{
+  return axios.get(BASE_URL,{
+    params:{
+      function:'CURRENCY_EXCHANGE_RATE',
+      from_currency:fromCurrency,
+      to_currency:toCurrency,
+      apikey:API_KEY
+    },
+  });
+}
+
 // console.log('API KEY',API_KEY)
 
 export const getStockQuote = (symbol)=>{
