@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTopCryptos } from '../services/cryptoAPI';
 
-const Market = () => {
+const TopPerformingCrypto = () => {
   const [topCryptos, setTopCryptos] = useState([]);
 
   useEffect(() => {
@@ -38,4 +38,4 @@ const Market = () => {
   );
 };
 
-export default Market;
+export default TopPerformingCrypto;

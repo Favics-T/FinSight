@@ -52,21 +52,30 @@ const highlightMatch = (text) => {
         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer" onClick={handleSearch}>
           <CiSearch />
         </span>
-        <input
-          type="text"
-          value={input}
-          onChange={(e)=> setInput(e.target.value)}
-          onFocus={() => setView(true)} 
-          onBlur={() => setTimeout(() => setView(false), 200)} 
-          placeholder="Search..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-400 rounded-[15px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleSearch();
-            }
-          }}
-        />
+       <input
+  type="text"
+  value={input}
+  onChange={(e) => {
+    const value = e.target.value;
+    setInput(value);
+
+    if (value.trim()) {
+      if (mode === 'stock') {
+        handleStockSearch(value);
+      } else {
+        handleCryptoSearch(value);
+      }
+      setView(true);
+    } else {
+      setView(false);
+    }
+  }}
+  onFocus={() => setView(true)}
+  onBlur={() => setTimeout(() => setView(false), 200)}
+  placeholder="Search..."
+  className="w-full pl-10 pr-4 py-2 border border-gray-400 rounded-[15px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+
       </label>
      
      

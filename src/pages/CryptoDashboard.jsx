@@ -5,6 +5,7 @@ import { formatCurrency } from "../util/formatCurrency";
 import Button from "../components/Button";
 import { IoIosMore } from "react-icons/io";
 import { useWatchlist } from "../context/WatchListContext";
+import TopPerformingCrypto from "../components/TopPerformingCrypto";
 
 const CryptoDashboard = () => {
   const [topCoinsData, setTopCoinsData] = useState([]);        // Default coins
@@ -45,11 +46,12 @@ const CryptoDashboard = () => {
 
   const btnNames =['Buy', 'Sell','Send','Exchange'];
   return (
-    <div className="flex flex-col overflow-x-hidden p-4">
-     
-     
-     
-      {/* Default coin list */}
+    <div className="flex justify-center items-center flex-col overflow-x-hidden p-4">
+      {
+        topCoinsData.length > 0 && coinsData.length > 0 
+        ?(<div className="flex flex-col p-4 justify-center items-center overflow-x- ">
+          
+            {/* Default coin list */}
       <div className="shadow hover:shadow-lg bg-white rounded-xl transition-all px-6 py-6">
 
 {/* <h1 className="font-semibold text-lg text-center pb-4">Crypto List</h1> */}
@@ -127,26 +129,11 @@ const CryptoDashboard = () => {
         ))}
       </div>
       </div>
-      
-     
+          
       {/* Error message */}
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
-     
-
-    
-
-<div className=" grid grid-cols-3  place-items-center justify-center gap-8">
-
-
-
-
- 
-
-</div>
-
-
-{/* chart  */}
+          {/* chart  */}
    <div className="my-10 bg-white">
             
         {/* Chart Section  */}
@@ -172,11 +159,11 @@ const CryptoDashboard = () => {
         My Crypto WatchList
       </h1>
       {/* watchlist section starts here */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col  gap-4">
         {
           coinsData.map((watchlist)=>(
             <ul key={watchlist.id}
-            className="flex justify-between">
+            className="flex  justify-between">
                 <div className="flex gap-4">
                   <img src={watchlist.image} alt="coin image"  
                   className="h-10 w-10" />
@@ -186,7 +173,7 @@ const CryptoDashboard = () => {
                   
                 </div>
 
-                <div>
+                <div className="flex flex-col items-center justify-center">
                    <p className="font-bold text-xl"> {formatCurrency(watchlist.current_price, currency)} </p>
             <p className={watchlist.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'}>
   <span className="text-black font-semibold pr-1"></span> {watchlist.price_change_percentage_24h.toFixed(2)}%
@@ -259,9 +246,23 @@ const CryptoDashboard = () => {
 
 </div>
 
+{/* market overview of top performing cryptos */}
+<div>
+  <TopPerformingCrypto />
+</div>
+          
+          </div>):
+          (<div>
+            <p>Crypto DashBoard Loading.......</p>
+            </div>)
+      }
 
 
-     
+       
+         
+
+
+
     </div>
   );
 };

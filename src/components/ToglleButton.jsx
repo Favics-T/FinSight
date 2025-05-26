@@ -5,7 +5,8 @@ const ToglleButton = () => {
     const {mode, toggleMode,setMode } = useToggle();
     const location = useLocation();
   return (
-   <div className='bg-blue-100 text-gray-500 py-2 px-3 items-center rounded flex gap-1'>
+   <div 
+   className='bg-blue-100 text-gray-500 py-2 px-3 w-44 items-center rounded flex gap-1'>
             <Link to='/stockdashboard'>
             <button 
             onClick={()=>setMode('stock')}

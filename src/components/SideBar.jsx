@@ -7,7 +7,7 @@ import { CiSettings } from "react-icons/ci";
 import { LiaAssistiveListeningSystemsSolid } from "react-icons/lia";
 import { Link } from 'react-router-dom';
 
-const SideBar = () => {
+const SideBar = ({ showSidebar }) => {
   const SideBarList = [
     { title: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
     { title: "Market", icon: <FaChartLine />, path: "/market" },
@@ -18,7 +18,11 @@ const SideBar = () => {
   ];
 
   return (
-    <aside className="hidden md:block fixed top-0 left-0 mt-22 h-screen w-[19%] bg-white shadow-lg border-r border-gray-300 z-50">
+    <aside
+      className={`fixed top-0 left-0 h-screen w-[70%] md:w-[19%] bg-white shadow-lg mt-20 border-r border-gray-300 z-50 transform transition-transform duration-300 
+        ${showSidebar ? 'translate-x-0' : '-translate-x-full'} 
+        md:translate-x-0 md:block`}
+    >
       <div className="space-y-4 px-5 py-9">
         {SideBarList.map((item, index) => (
           <Link

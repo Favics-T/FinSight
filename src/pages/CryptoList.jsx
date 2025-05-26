@@ -42,15 +42,25 @@ const CryptoList = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Crypto Market</h2>
+      <div 
+      className='flex justify-between py-4'>
+        {/* subheader */}
+        <h2 className="text-2xl font-bold ">
+          Crypto Coins</h2>
 
-      <input
+      {/* input */}
+       <input
         type="text"
         placeholder="Search coin by name or symbol..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="mb-4 p-2 border w-full rounded"
+        className=" p-2 w-[300px] shadow hover:shadow-lg bg-white rounded"
       />
+
+      </div>
+      
+
+     
 
       {loading ? (
         <p>Loading coins...</p>
@@ -59,7 +69,7 @@ const CryptoList = () => {
           {filteredCoins.map((coin) => (
             <li
               key={coin.id}
-              className="mb-3 border p-2 rounded flex justify-between items-center"
+              className="mb-3 bg-white shadow hover:shadow-lg p-2 rounded flex justify-between items-center"
             >
               <div>
                 <strong>{coin.name} ({coin.symbol.toUpperCase()})</strong> - ${coin.current_price.toLocaleString()}
@@ -67,10 +77,10 @@ const CryptoList = () => {
               <button
                 onClick={() => toggleWatchlist(coin.id)}
                 className={`px-3 py-1 rounded text-white ${
-                  watchlist.includes(coin.id) ? 'bg-red-600' : 'bg-green-600'
+                  watchlist.includes(coin.id) ? 'bg-red-600' : 'bg-[#1336c5]'
                 }`}
               >
-                {watchlist.includes(coin.id) ? 'Remove' : 'Add'}
+                {watchlist.includes(coin.id) ? 'Remove' : 'Add to Watchlist'}
               </button>
             </li>
           ))}
