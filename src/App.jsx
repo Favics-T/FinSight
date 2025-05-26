@@ -11,21 +11,23 @@ import CryptoDashboard from './pages/CryptoDashboard';
 import DashboardHeader from './components/DashboardHeader';
 import CryptoDetail from './pages/CryptoDetail';
 import StockDetail from './pages/StockDetail';
+import CryptoList from './pages/CryptoList';
 
 const Layout = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <Nav />
-      <div className='flex flex-1 w-full '>
-        <SideBar />
-       <div className=" md:px-10 px-2 flex-1">
-        <DashboardHeader />
- <Outlet />
-       </div>
-       
-      </div>
-      
+    <div className="flex flex-col min-h-screen bg-[#f7f5f5]">
+  <Nav />
+  
+  <div className="flex flex-1 w-full">
+    <SideBar />
+
+    <div className="flex-1 md:ml-[19%] md:px-10 px-2">
+      <DashboardHeader />
+      <Outlet />
     </div>
+  </div>
+</div>
+
   );
 };
 
@@ -46,6 +48,7 @@ const App = () => {
           <Route path='cryptodashboard' element={<CryptoDashboard />}/>
           <Route path="/crypto/:id" element={<CryptoDetail />} />
           <Route path='/stock/:symbol' element={<StockDetail />}/>
+          <Route path='/cryptolist' element={<CryptoList />} />
         </Route>
       </Routes>
     </Router>

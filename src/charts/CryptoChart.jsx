@@ -20,7 +20,7 @@ const CryptoChart = ( {coinId} ) => {
     chartData ? 
    <div className=' '>
  <Line
- className='w-[]  '
+ className='w-full  '
   data={chartData} />
    </div>
      :<p>Loading chart...</p>

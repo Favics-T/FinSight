@@ -7,3 +7,22 @@
 .Inter{
   font-family: "Inter" sans-serif;
 }
+
+body {
+  background-color: white;
+  color: black;
+}
+
+
+.my-dark body {
+  background-color: #1a202c; 
+  color: #cbd5e1; 
+}
+
+
+.my-dark .bg-white {
+  background-color: #2d3748; 
+}
+.my-dark .text-black {
+  color: #cbd5e1;
+}

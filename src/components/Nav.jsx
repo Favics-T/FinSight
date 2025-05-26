@@ -5,10 +5,11 @@ import { IoMdNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import DataContext from '../context/DataContext';
 import SearchBar from './SearchBar';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Nav = () => {
 
-const { stockData, fetchStockQuote,searchStock } = useContext(DataContext);
+const {theme, toggleTheme} = useContext(ThemeContext)
 const [search, setSearch] = useState("");
 const [view, setView] = useState(false)
 
@@ -58,7 +59,12 @@ const [view, setView] = useState(false)
 <div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
 <img src="" alt="" />
 </div>
-<MdOutlineDarkMode className='md:text-3xl text-sm '/>
+<button
+onClick={toggleTheme}
+>
+  
+  <MdOutlineDarkMode className='md:text-3xl text-sm '/>
+  </button>
 <IoMdNotifications className='md:text-3xl text-sm '/>
 
 </ol>

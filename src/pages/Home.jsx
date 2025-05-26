@@ -4,7 +4,7 @@ import StockDashboard from './StockDashboard'
 
 const Home = () => {
   return (
-    <div>
+    <div className='bg-[#DDDDDD]'>
       <DashBoard />
       {/* <StockDashboard /> */}
     </div>
