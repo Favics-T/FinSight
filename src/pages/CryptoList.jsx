@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useWatchlist } from '../context/WatchListContext';
+import { IoMdAdd } from "react-icons/io";
+import { CiSquareRemove } from "react-icons/ci";
+
+
 
 const CryptoList = () => {
   const [coins, setCoins] = useState([]);
@@ -41,7 +45,7 @@ const CryptoList = () => {
   );
 
   return (
-    <div className="p-4">
+    <div className="p-4 flex flex-col gap-10">
       <div 
       className='flex justify-between py-4'>
         {/* subheader */}
@@ -54,10 +58,12 @@ const CryptoList = () => {
         placeholder="Search coin by name or symbol..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className=" p-2 w-[300px] shadow hover:shadow-lg bg-white rounded"
+        className=" p-2 w-[300px] shadow hover:shadow-lg border rounded-xl"
       />
 
       </div>
+
+      
       
 
      
@@ -69,7 +75,7 @@ const CryptoList = () => {
           {filteredCoins.map((coin) => (
             <li
               key={coin.id}
-              className="mb-3 bg-white shadow hover:shadow-lg p-2 rounded flex justify-between items-center"
+              className="mb-3 bg-whit border rounded-lg shadow-lg hover:shadow-lg p-2  flex justify-between items-center"
             >
               <div>
                 <strong>{coin.name} ({coin.symbol.toUpperCase()})</strong> - ${coin.current_price.toLocaleString()}
@@ -77,10 +83,10 @@ const CryptoList = () => {
               <button
                 onClick={() => toggleWatchlist(coin.id)}
                 className={`px-3 py-1 rounded text-white ${
-                  watchlist.includes(coin.id) ? 'bg-red-600' : 'bg-[#1336c5]'
+                  watchlist.includes(coin.id) ? 'bg-red-600 ' : 'bg-[#1336c5]'
                 }`}
               >
-                {watchlist.includes(coin.id) ? 'Remove' : 'Add to Watchlist'}
+                {watchlist.includes(coin.id) ? <CiSquareRemove /> : <IoMdAdd />}
               </button>
             </li>
           ))}

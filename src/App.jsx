@@ -12,10 +12,12 @@ import DashboardHeader from './components/DashboardHeader';
 import CryptoDetail from './pages/CryptoDetail';
 import StockDetail from './pages/StockDetail';
 import CryptoList from './pages/CryptoList';
+import Portfolio from './pages/Portfolio';
+import Settings from './pages/Settings';
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-[#f7f5f5]">
+    <div className="flex flex-col min-h-screen ">
   <Nav />
   
   <div className="flex flex-1 w-full">
@@ -34,7 +36,7 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <div>
+    <div className='bg-[#030d24] text-white'>
       
       <Router>
       <Routes>
@@ -49,6 +51,8 @@ const App = () => {
           <Route path="/crypto/:id" element={<CryptoDetail />} />
           <Route path='/stock/:symbol' element={<StockDetail />}/>
           <Route path='/cryptolist' element={<CryptoList />} />
+          <Route path='/portfolio' element={<Portfolio />}/>
+          <Route path='/settings' element={<Settings />}/>
         </Route>
       </Routes>
     </Router>

@@ -17,11 +17,11 @@ const Market = () => {
   }, []);
 
   return (
-    <div className="bg-white flex flex-col gap-6 p-4 rounded-xl shadow-md w-full max-w-4x mx-auto mt-6">
+    <div className="bg-whie flex flex-col gap-6 p-4 rounded-xl shadow-md w-full max-w-4x mx-auto mt-6">
       <h2 className="text-xl font-bold mb-4 text-center">Top Performing Cryptocurrencies (24h)</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
         {topCryptos.map(coin => (
-          <div key={coin.id} className=" p-3 rounded shadow bg-[#fcfcfc] hover:shadow-lg transition">
+          <div key={coin.id} className=" p-3 rounded-lg shadow bg-[#fcfcfc border border-blue-300 hover:shadow-lg transition">
             <div className="flex items-center gap-2 mb-2">
               <img src={coin.image} alt={coin.name} className="w-5 h-5" />
               <span className="font-semibold">{coin.name}</span>

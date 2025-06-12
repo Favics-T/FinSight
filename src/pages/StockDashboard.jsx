@@ -61,7 +61,12 @@ const StockDashboard = () => {
   return (
     <div className='flex flex-col'>
 
-    <div className="mb-6">
+
+    {/* 
+    <div>
+
+
+ <div className="mb-6">
   <label className="block font-semibold mb-2">Convert Currency:</label>
   <select
     className="border px-3 py-2 rounded"
@@ -79,6 +84,7 @@ const StockDashboard = () => {
 </div>
 
 
+
       <div className='grid md:grid-cols-4 gap-4'>
         {
         !exchangeRate ? (
@@ -94,7 +100,7 @@ const StockDashboard = () => {
               <div key={symbol} className='border  py-6 px-4 flex flex-col border-gray-200   shadow 
                gap-6 rounded-lg  '>
 
-                  {/* symbol and dollar */}
+                  {/* symbol and dollar *
                   <div className='flex justify-between '>
                     <h1 className='font-semibold text-sm'>{symbol}</h1>
                     <p className='text-gray-500'>$</p>
@@ -120,9 +126,20 @@ const StockDashboard = () => {
           );
         }))}
       </div>
-      <div className='border'>
+
+
+ <div className='border'>
  <StockBarChart />
       </div>
+
+
+    </div> */}
+
+   
+
+
+      
+     
      
     </div>
   );

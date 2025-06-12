@@ -19,7 +19,7 @@ const SideBar = ({ showSidebar }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen w-[70%] md:w-[19%] bg-white shadow-lg mt-20 border-r border-gray-300 z-50 transform transition-transform duration-300 
+      className={`fixed top-0 left-0 h-screen w-[70%] md:w-[19%]  shadow-lg mt-20 border-r border-gray-300 z-50 transform transition-transform duration-300 
         ${showSidebar ? 'translate-x-0' : '-translate-x-full'} 
         md:translate-x-0 md:block`}
     >

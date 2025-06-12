@@ -14,7 +14,7 @@ const WatchList = () => {
 
       <ul>
         {coinsData.map((coin) => (
-          <li key={coin.id} className="mb-3 bg-white shadow hover:shadow-lg py-4 px-6 rounded flex justify-between items-center">
+          <li key={coin.id} className="mb-3  border border-blue-300 rounded-3xl bg-whte shadow hover:shadow-lg py-4 px-6  flex justify-between items-center">
             <div>
               <div className='flex gap-4 justify-center items-center'>
                 <img src={coin.image} alt={coin.name}

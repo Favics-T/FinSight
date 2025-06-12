@@ -19,7 +19,7 @@ const [view, setView] = useState(false)
 
 
   return (
-    <div className='sticky top-0 relative bg-white'>
+    <div className='sticky top-0 relative '>
      
     <div className='md:px-10 px-4 font-sans md:py-5 py-2 shadow-lg flex justify-between '>
         

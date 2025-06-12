@@ -52,15 +52,15 @@ const CryptoDashboard = () => {
         ?(<div className="flex flex-col p-4 justify-center items-center overflow-x- ">
           
             {/* Default coin list */}
-      <div className="shadow hover:shadow-lg bg-white rounded-xl transition-all px-6 py-6">
+      <div className="shadow hover:shadow-lg bg-whie rounded-xl transition-all px-6 py-6">
 
 {/* <h1 className="font-semibold text-lg text-center pb-4">Crypto List</h1> */}
 
-<div className="grid bg-white grid-cols-1 cols-span-2 md:grid-cols-4 gap-4">
+<div className="grid  grid-cols-1 cols-span-2 md:grid-cols-4 gap-4">
         {topCoinsData.map((coin) => (
           <div
             key={coin.id}
-            className="p-4 border bg-white border-gray-200  rounded shadow hover:shadow-lg transition-all"
+            className="p-4 border bg-whit border-gray-200  rounded shadow hover:shadow-lg transition-all"
           >
 
 
@@ -74,14 +74,14 @@ const CryptoDashboard = () => {
             </div>
  <div className="">
 
-<div className=" flex w-full bg-white justify-between">
+<div className=" flex w-full bg-whit justify-between">
 <div className="">
     
                 {/* <p>Price: {coin.current_price.toLocaleString()}</p> */}
             {/* i want to use the formatcurrency from my util folder */}
             <p className="font-bold text-xl"> {formatCurrency(coin.current_price, currency)} </p>
             <p className={coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'}>
-  <span className="text-black font-semibold pr-1">24h Change:</span> {coin.price_change_percentage_24h.toFixed(2)}%
+  <span className="text-white font-semibold pr-1">24h Change:</span> {coin.price_change_percentage_24h.toFixed(2)}%
 </p>
   </div>
 
@@ -134,7 +134,7 @@ const CryptoDashboard = () => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
           {/* chart  */}
-   <div className="my-10 bg-white">
+   <div className="my-10 bg-whie">
             
         {/* Chart Section  */}
       <div className="px-4 col-span-2 mt-12 shadow-lg  py-4 flex flex-col gap-4">
@@ -153,7 +153,7 @@ const CryptoDashboard = () => {
 <div>
   <div className="grid md:grid-cols-3 gap-12 place-items-center">
 
-    <div className=" bg-white md:w-[650px] w-96
+    <div className=" bg-whie md:w-[650px] w-96
      justify-center  rounded-xl shadow-lg col-span-2 px-8 py-4 gap-4 flex flex-col">
       <h1 className="font-bold leading-relaxed">
         My Crypto WatchList
@@ -186,7 +186,7 @@ const CryptoDashboard = () => {
       </div>
     </div>
    
-    <div className="bg-white">
+    <div className="bg-whit border border-blue-300 rounded-lg shadow-lg">
        <div className=" flex flex-col rounded-lg justify-center items-center px-4 gap-6 py-2  shadow-lg">
       
       <h1 className="font-bold text-2xl ">Exchange Rate</h1>
