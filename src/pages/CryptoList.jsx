@@ -82,8 +82,8 @@ const CryptoList = () => {
               </div>
               <button
                 onClick={() => toggleWatchlist(coin.id)}
-                className={`px-3 py-1 rounded text-white ${
-                  watchlist.includes(coin.id) ? 'bg-red-600 ' : 'bg-[#1336c5]'
+                className={`px-3 py-1 rounded  ${
+                  watchlist.includes(coin.id) ? 'bg-white text-[#1336c5]' : 'bg-[#1336c5]'
                 }`}
               >
                 {watchlist.includes(coin.id) ? <CiSquareRemove /> : <IoMdAdd />}
