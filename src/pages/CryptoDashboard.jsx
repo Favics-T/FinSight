@@ -47,7 +47,9 @@ const CryptoDashboard = () => {
   const btnNames =['Buy', 'Sell','Send','Exchange'];
   return (
     <div className="flex justify-center items-center flex-col overflow-x-hidden p-4">
-      {
+      <div>
+
+        {
         topCoinsData.length > 0 && coinsData.length > 0 
         ?(<div className="flex flex-col p-4 justify-center items-center overflow-x- ">
           
@@ -56,7 +58,7 @@ const CryptoDashboard = () => {
 
 {/* <h1 className="font-semibold text-lg text-center pb-4">Crypto List</h1> */}
 
-<div className="grid  grid-cols-1 cols-span-2 md:grid-cols-4 gap-4">
+<div className="grid md:grid-cols-4 gap-4">
         {topCoinsData.map((coin) => (
           <div
             key={coin.id}
@@ -256,6 +258,9 @@ const CryptoDashboard = () => {
             <p>Crypto DashBoard Loading.......</p>
             </div>)
       }
+
+      </div>
+      
 
 
        
