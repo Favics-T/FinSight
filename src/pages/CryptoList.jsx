@@ -49,7 +49,7 @@ const CryptoList = () => {
       <div 
       className='flex justify-between py-4'>
         {/* subheader */}
-        <h2 className="text-2xl font-bold ">
+        <h2 className="md:text-2xl text-sm font-bold ">
           Crypto Coins</h2>
 
       {/* input */}
@@ -58,7 +58,7 @@ const CryptoList = () => {
         placeholder="Search coin by name or symbol..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className=" p-2 w-[300px] shadow hover:shadow-lg border rounded-xl"
+        className=" p-2 md:w-[300px] w-[150px] shadow hover:shadow-lg border rounded-xl"
       />
 
       </div>
@@ -75,10 +75,10 @@ const CryptoList = () => {
           {filteredCoins.map((coin) => (
             <li
               key={coin.id}
-              className="mb-3 bg-whit border rounded-lg shadow-lg hover:shadow-lg p-2  flex justify-between items-center"
+              className="mb-3 bg-blue-950 rounded-lg shadow-lg hover:shadow-lg p-2  flex justify-between items-center"
             >
               <div>
-                <strong>{coin.name} ({coin.symbol.toUpperCase()})</strong> - ${coin.current_price.toLocaleString()}
+                <h1>{coin.name} ({coin.symbol.toUpperCase()})</h1> - ${coin.current_price.toLocaleString()}
               </div>
               <button
                 onClick={() => toggleWatchlist(coin.id)}
