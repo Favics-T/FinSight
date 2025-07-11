@@ -43,7 +43,7 @@ const [view, setView] = useState(false)
 
         </div>
 
-        <div className='md:hidden block' onClick={()=>setView(!view)}>
+        <div className='md:hidden block cursor-pointer' onClick={()=>setView(!view)}>
             <p>--</p>
            
         </div>
@@ -54,8 +54,9 @@ const [view, setView] = useState(false)
               view &&(
                 <div>
                   <div className='absolute right-0 md:hidden'>
-<ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-black text-white  px-6 items-center gap-4'>
+<ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-blue-400 text-white  px-6 items-center gap-4'>
 {/* <SearchBar className=''/> */}
+<SearchBar />
 <div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
 <img src="" alt="" />
 </div>
