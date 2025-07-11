@@ -6,6 +6,9 @@ import { CiSearch } from "react-icons/ci";
 import DataContext from '../context/DataContext';
 import SearchBar from './SearchBar';
 import { ThemeContext } from '../context/ThemeContext';
+import { SiDbeaver } from 'react-icons/si';
+import SideBar from './SideBar'
+
 
 const Nav = () => {
 
@@ -67,7 +70,7 @@ onClick={toggleTheme}
   <MdOutlineDarkMode className='md:text-3xl text-sm '/>
   </button>
 <IoMdNotifications className='md:text-3xl text-sm '/>
-
+<SideBar />
 </ol>
 
 

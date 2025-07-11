@@ -50,7 +50,7 @@ const highlightMatch = (text) => {
       
       <label className="relative block">
         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer" onClick={handleSearch}>
-          <CiSearch />
+          <CiSearch className='text-white'/>
         </span>
        <input
   type="text"
@@ -73,7 +73,7 @@ const highlightMatch = (text) => {
   onFocus={() => setView(true)}
   onBlur={() => setTimeout(() => setView(false), 200)}
   placeholder="Search..."
-  className="w-full pl-10 pr-4 py-2 border border-gray-400 rounded-[15px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+  className="md:w-full w-30 pl-10 pr-4 py-2 border md:border-gray-400 rounded-[15px] focus:outline-none focus:ring-2 focus:ring-blue-500"
 />
 
       </label>
@@ -82,7 +82,7 @@ const highlightMatch = (text) => {
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
      {view && searchResults && searchResults.length > 0 && (
-  <div className='absolute bg-white border border-gray-300 rounded-md mt-1 w-full max-h-96 overflow-auto z-10 shadow-lg'>
+  <div className='absolute  border border-gray-300 rounded-md mt-1 md:w-full   max-h-96 overflow-auto z-10 shadow-lg'>
     {mode === 'stock' ? (
       searchResults.map((result, index) => (
         <Link 
