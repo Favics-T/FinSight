@@ -67,6 +67,8 @@ const [view, setView] = useState(false)
 onClick={toggleTheme}
 >
   
+
+  
   <MdOutlineDarkMode className='md:text-3xl text-sm '/>
   </button>
 <IoMdNotifications className='md:text-3xl text-sm '/>
