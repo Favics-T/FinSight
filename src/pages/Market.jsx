@@ -31,11 +31,15 @@ const Market = () => {
         <div>
  <div className="grid  grid-cols-2 md:grid-cols-4 gap-4 text-sm">
         {topCryptos.map(coin => (
-          <div key={coin.id} className=" p-3 rounded-lg shadow bg-[#fcfcfc border border-blue-300 hover:shadow-lg transition">
-            <div className="flex items-center gap-2 mb-2">
+          <div key={coin.id} className=" md:p-3 p-1 rounded-lg shadow bg-[#fcfcfc border border-blue-500 hover:shadow-lg transition">
+            <div className="flex justify-between items-center gap-2 mb-2">
               <img src={coin.image} alt={coin.name} className="w-5 h-5" />
-              <span className="font-semibold">{coin.name}</span>
-              <span className="text-gray-400">({coin.symbol.toUpperCase()})</span>
+              <div className='flex md:flex-row flex-col '>
+                <h1 className='font-semibold'>{coin.name}</h1>
+                <p className='text-gray-400'>({coin.symbol.toUpperCase()})</p>
+              </div>
+              {/* <span className="font-semibold">{coin.name}</span> */}
+              {/* <span className="text-gray-400">({coin.symbol.toUpperCase()})</span> */}
             </div>
             <div className="text-gray-700">Price: ${coin.current_price.toLocaleString()}</div>
             <div className={`font-medium ${coin.price_change_percentage_24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>

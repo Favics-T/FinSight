@@ -22,13 +22,13 @@ const SideBarProvider = ({ children }) => {
 
     
   return (
-    <div>
+    
       <SideBarContext.Provider value={{
                                 SideBarList
       }}>
         {children}
       </SideBarContext.Provider>
-    </div>
+    
   )
 }
 

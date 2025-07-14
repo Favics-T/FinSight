@@ -5,7 +5,7 @@ import { SideBarContext } from '../context/SideBarContext';
 const SideBar = ({ showSidebar }) => {
  
 
-  const {SideBarList} = useContext(SideBarContext);
+  const { SideBarList } = useContext(SideBarContext);
 
   return (
     <aside

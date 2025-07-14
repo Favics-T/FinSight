@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { useSearch } from "../context/SearchContext";
 import { useToggle } from '../context/ToggleContext';
+import { debounce } from 'chart.js/helpers';
 
 const SearchBar = () => {
   const [input, setInput] = useState('');
@@ -28,6 +29,19 @@ const SearchBar = () => {
       setView(false);
     }
   };
+
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      if (value.trim()) {
+        if (mode === 'stock') {
+          handleStockSearch(value);
+        } else {
+          handleCryptoSearch(value);
+        }
+      }
+    }, 500),
+    [mode]
+  );
 
   const handleSelect = () => {
   setInput('');
@@ -58,17 +72,19 @@ const highlightMatch = (text) => {
   onChange={(e) => {
     const value = e.target.value;
     setInput(value);
+    setView(true);
+    debouncedSearch(value);
 
-    if (value.trim()) {
-      if (mode === 'stock') {
-        handleStockSearch(value);
-      } else {
-        handleCryptoSearch(value);
-      }
-      setView(true);
-    } else {
-      setView(false);
-    }
+    // if (value.trim()) {
+    //   if (mode === 'stock') {
+    //     handleStockSearch(value);
+    //   } else {
+    //     handleCryptoSearch(value);
+    //   }
+    //   setView(true);
+    // } else {
+    //   setView(false);
+    // }
   }}
   onFocus={() => setView(true)}
   onBlur={() => setTimeout(() => setView(false), 200)}

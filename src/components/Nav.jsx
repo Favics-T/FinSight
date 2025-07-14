@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react'
+import React, { useState,useContext, useEffect, useRef } from 'react'
 import { FaChartLine } from "react-icons/fa6";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
@@ -8,14 +8,34 @@ import SearchBar from './SearchBar';
 import { ThemeContext } from '../context/ThemeContext';
 import { SiDbeaver } from 'react-icons/si';
 import SideBar from './SideBar'
+import { MdViewSidebar } from "react-icons/md";
+import { SideBarContext } from '../context/SideBarContext';
+import { Link } from 'react-router-dom';
 
 
 const Nav = () => {
 
 const {theme, toggleTheme} = useContext(ThemeContext)
 const [search, setSearch] = useState("");
-const [view, setView] = useState(false)
+const [view, setView] = useState(false);
 
+const dropDown = useRef(null);
+
+useEffect(()=>{
+  const handleClickOutside = (event)=>{
+    if(dropDown.current && !dropDown.current.contains(event.target)){
+      setView(false);
+    }}
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return ()=>{
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+},[view])
+
+                              
+const  {SideBarList} = useContext(SideBarContext);
+console.log(SideBarList);
 
 
 
@@ -47,7 +67,7 @@ const [view, setView] = useState(false)
         </div>
 
         <div className='md:hidden block cursor-pointer' onClick={()=>setView(!view)}>
-            <p>--</p>
+            <MdViewSidebar  className='text-3xl text-blue-600'/>
            
         </div>
         
@@ -55,24 +75,32 @@ const [view, setView] = useState(false)
 
      {
               view &&(
-                <div>
+                <div ref={dropDown}>
                   <div className='absolute right-0 md:hidden'>
 <ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-blue-400 text-white  px-6 items-center gap-4'>
 {/* <SearchBar className=''/> */}
 <SearchBar />
-<div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
+{/* <div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
 <img src="" alt="" />
-</div>
-<button
+</div> */}
+{/* <button
 onClick={toggleTheme}
 >
-  
-
-  
-  <MdOutlineDarkMode className='md:text-3xl text-sm '/>
-  </button>
-<IoMdNotifications className='md:text-3xl text-sm '/>
-<SideBar />
+    <MdOutlineDarkMode className='md:text-3xl text-sm '/>
+  </button> */}
+{/* <IoMdNotifications className='md:text-3xl text-sm '/> */}
+ <div className="space-y-4 ">
+       {
+        SideBarList.map(({title,path})=>(
+          <div key={path}>
+              <Link to={path}>
+                 <h1>{title}</h1>
+              </Link>
+             
+            </div>
+        ))
+       }
+      </div>
 </ol>
 
 
