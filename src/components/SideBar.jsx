@@ -1,21 +1,11 @@
-import React from 'react';
-import { MdDashboard } from "react-icons/md";
-import { FaChartLine } from "react-icons/fa6";
-import { CiStar } from "react-icons/ci";
-import { BsDisplayportFill } from "react-icons/bs";
-import { CiSettings } from "react-icons/ci";
-import { LiaAssistiveListeningSystemsSolid } from "react-icons/lia";
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { SideBarContext } from '../context/SideBarContext';
 
 const SideBar = ({ showSidebar }) => {
-  const SideBarList = [
-    { title: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
-    { title: "Market", icon: <FaChartLine />, path: "/market" },
-    { title: "WatchList", icon: <CiStar />, path: "/watchlist" },
-    { title: "Portfolio", icon: <BsDisplayportFill />, path: "/portfolio" },
-    { title: "Settings", icon: <CiSettings />, path: "/settings" },
-    { title: "CryptoList", icon: <LiaAssistiveListeningSystemsSolid />, path: "/cryptolist" }
-  ];
+ 
+
+  const {SideBarList} = useContext(SideBarContext);
 
   return (
     <aside
@@ -24,14 +14,14 @@ const SideBar = ({ showSidebar }) => {
         md:translate-x-0 md:block`}
     >
       <div className="space-y-4 px-5 py-9">
-        {SideBarList.map((item, index) => (
+        {SideBarList.map(({title, path, icon}) => (
           <Link
-            to={item.path}
-            key={index}
+            to={path}
+            key={path}
             className="flex items-center gap-3 text-sm cursor-pointer hover:bg-blue-200 w-full hover:rounded p-3 hover:text-blue-600 "
           >
-            <span className="text-lg">{item.icon}</span>
-            <span>{item.title}</span>
+            <span className="text-lg">{icon}</span>
+            <span>{title}</span>
           </Link>
         ))}
       </div>

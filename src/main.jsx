@@ -8,6 +8,8 @@ import { ToggleProvider } from './context/ToggleContext.jsx'
 import './chartSetup.js'
 import { WatchlistProvider } from './context/WatchListContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import SideBar from './components/SideBar.jsx'
+import SideBarProvider from './context/SideBarContext.jsx'
 
 
 
@@ -15,6 +17,7 @@ createRoot(document.getElementById('root')).render(
  
  
   <StrictMode>
+    <SideBarProvider>
     <ThemeProvider>
     <WatchlistProvider>
     <ToggleProvider>
@@ -26,5 +29,6 @@ createRoot(document.getElementById('root')).render(
     </ToggleProvider>
     </WatchlistProvider>
     </ThemeProvider>
+    </SideBarProvider>
   </StrictMode>,
 )
