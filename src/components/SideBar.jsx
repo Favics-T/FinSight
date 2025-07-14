@@ -28,7 +28,7 @@ const SideBar = ({ showSidebar }) => {
           <Link
             to={item.path}
             key={index}
-            className="flex items-center gap-3 text-sm cursor-pointer hover:bg-blue-200 w-full hover:rounded hover:px-3 hover:py-3 hover:text-blue-600 transition"
+            className="flex items-center gap-3 text-sm cursor-pointer hover:bg-blue-200 w-full hover:rounded p-3 hover:text-blue-600 "
           >
             <span className="text-lg">{item.icon}</span>
             <span>{item.title}</span>
