@@ -1,4 +1,4 @@
-// src/components/CryptoList.jsx
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useWatchlist } from '../context/WatchListContext';

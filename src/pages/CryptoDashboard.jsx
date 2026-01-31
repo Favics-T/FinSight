@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import { IoIosMore } from "react-icons/io";
 import { useWatchlist } from "../context/WatchListContext";
 import TopPerformingCrypto from "../components/TopPerformingCrypto";
+import Watchlist from "../components/WatchList";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -176,7 +177,7 @@ const CryptoDashboard = () => {
             <div className="bg-w md:w-[650px] h-96 border w-96 justify-centr rounded-xl border-blue-300 shadow-lg col-span-2 px-8 py-4 gap-4 flex flex-col">
               <h1 className="font-bold leading-relaxed">My Crypto WatchList</h1>
               <div className="flex flex-col gap-4">
-                {coinsData.map((watchlist) => (
+                {/* {coinsData.map((watchlist) => (
                   <ul key={watchlist.id} className="flex justify-between">
                     <div className="flex gap-4">
                       {watchlist.image ? (
@@ -212,7 +213,9 @@ const CryptoDashboard = () => {
                       </p>
                     </div>
                   </ul>
-                ))}
+                ))} */}
+                <Watchlist coins={coinsData} currency={currency}  />
+
               </div>
             </div>
 
