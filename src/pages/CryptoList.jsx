@@ -81,7 +81,7 @@ const CryptoList = () => {
                 <h1>{coin.name} ({coin.symbol.toUpperCase()})</h1> - ${coin.current_price.toLocaleString()}
               </div>
               <button
-                onClick={() => toggleWatchlist(coin.id)}
+                onClick={() => toggleWatchlist(coin)}
                 className={`px-3 py-1 rounded  ${
                   watchlist.includes(coin.id) ? 'bg-white text-[#1336c5]' : 'bg-[#1336c5]'
                 }`}

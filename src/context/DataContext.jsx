@@ -72,5 +72,5 @@ export const DataProvider = ({ children }) => {
   );
 };
 
-// export const useData = () => useContext(DataContext);
+export const useData = () => useContext(DataContext);
 export default DataContext

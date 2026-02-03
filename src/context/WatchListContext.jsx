@@ -13,12 +13,12 @@ export const WatchlistProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Update localStorage on change
+  // Sync watchlist with localStorage
   useEffect(() => {
     localStorage.setItem('watchlist', JSON.stringify(watchlist));
   }, [watchlist]);
 
-  // Fetch coin data when watchlist changes
+  // Fetch full coin data for coins that are only IDs (e.g., after refresh)
   useEffect(() => {
     const fetchCoins = async () => {
       if (watchlist.length === 0) {
@@ -26,20 +26,30 @@ export const WatchlistProvider = ({ children }) => {
         return;
       }
 
+      // Only fetch coins not already in coinsData
+      const missingIds = watchlist.filter(
+        (id) => !coinsData.some((coin) => coin.id === id)
+      );
+
+      if (missingIds.length === 0) return; // no need to fetch
+
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
-          params: {
-            vs_currency: 'usd',
-            ids: watchlist.join(','),
-            order: 'market_cap_desc',
-            per_page: watchlist.length,
-            page: 1,
-            sparkline: false,
-          },
-        });
-        setCoinsData(res.data);
+        const res = await axios.get(
+          'https://api.coingecko.com/api/v3/coins/markets',
+          {
+            params: {
+              vs_currency: 'usd',
+              ids: missingIds.join(','),
+              order: 'market_cap_desc',
+              per_page: missingIds.length,
+              page: 1,
+              sparkline: false,
+            },
+          }
+        );
+        setCoinsData((prev) => [...prev, ...res.data]);
       } catch (err) {
         setError('Failed to fetch watchlist data');
         console.error(err);
@@ -51,11 +61,23 @@ export const WatchlistProvider = ({ children }) => {
     fetchCoins();
   }, [watchlist]);
 
-  // Toggle a coin in/out of the watchlist
-  const toggleWatchlist = (coinId) => {
+  // Toggle a coin in/out of watchlist using full coin object
+  const toggleWatchlist = (coin) => {
+    if (!coin?.id) return;
+
     setWatchlist((prev) =>
-      prev.includes(coinId) ? prev.filter((id) => id !== coinId) : [...prev, coinId]
+      prev.includes(coin.id) ? prev.filter((id) => id !== coin.id) : [...prev, coin.id]
     );
+
+    setCoinsData((prev) => {
+      if (prev.some((c) => c.id === coin.id)) {
+        // Remove coin
+        return prev.filter((c) => c.id !== coin.id);
+      } else {
+        // Add coin
+        return [...prev, coin];
+      }
+    });
   };
 
   return (

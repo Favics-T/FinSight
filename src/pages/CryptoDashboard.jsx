@@ -174,53 +174,18 @@ const CryptoDashboard = () => {
           {/* Watchlist & Exchange Section */}
           <div className="grid md:grid-cols-3 gap-12 place-items-center w-full">
             {/* Watchlist */}
-            <div className="bg-w md:w-[650px] h-96 border w-96 justify-centr rounded-xl border-blue-300 shadow-lg col-span-2 px-8 py-4 gap-4 flex flex-col">
+            <div className="bg-w md:w-[650px] overflow-y-auto flex-1 scrollbar-thumb-blue-400 s h-96 border w-96 rounded-xl border-blue-300 shadow-lg col-span-2 px-8 py-4 flex flex-col
+           ">
               <h1 className="font-bold leading-relaxed">My Crypto WatchList</h1>
               <div className="flex flex-col gap-4">
-                {/* {coinsData.map((watchlist) => (
-                  <ul key={watchlist.id} className="flex justify-between">
-                    <div className="flex gap-4">
-                      {watchlist.image ? (
-                        <img
-                          src={watchlist.image}
-                          alt={watchlist.name}
-                          className="h-10 w-10"
-                        />
-                      ) : (
-                        <img
-                          src="/placeholder.png"
-                          alt="crypto"
-                          className="h-10 w-10"
-                        />
-                      )}
-                      <ul className="flex">
-                        <li>{watchlist.name}</li>
-                      </ul>
-                    </div>
-
-                    <div className="flex flex-col items-center justify-center">
-                      <p className="font-bold text-xl">
-                        {formatCurrency(watchlist.current_price, currency)}
-                      </p>
-                      <p
-                        className={
-                          watchlist.price_change_percentage_24h >= 0
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
-                      >
-                        {watchlist.price_change_percentage_24h.toFixed(2)}%
-                      </p>
-                    </div>
-                  </ul>
-                ))} */}
+                
                 <Watchlist coins={coinsData} currency={currency}  />
 
               </div>
             </div>
 
             {/* Exchange */}
-            <div className="bg-whit border border-blue-300 rounded-lg shadow-lg w-full max-w-sm">
+            <div className="border border-blue-300 rounded-lg shadow-lg w-full max-w-sm">
               <div className="flex flex-col rounded-lg justify-center items-center px-4 gap-6 py-4">
                 <h1 className="font-bold text-2xl">Exchange Rate</h1>
                 <div className="flex gap-4">
