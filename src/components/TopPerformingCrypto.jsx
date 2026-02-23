@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTopCryptos } from '../services/cryptoAPI';
+import PriceCard from './PriceCard';
 
-const TopPerformingCrypto = () => {
+const TopPerformingCrypto = ({ title = "Top Performing Cryptocurrencies (24h)", limit = 8 }) => {
   const [topCryptos, setTopCryptos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const data = await fetchTopCryptos();
-        setTopCryptos(data);
+        setTopCryptos(data.slice(0, limit));
       } catch (err) {
+        setError("Failed to fetch top cryptos");
         console.error("Error fetching top cryptos", err);
+      } finally {
+        setLoading(false);
       }
     };
+
     getData();
-  }, []);
+  }, [limit]);
+
+  if (loading) return <p>Loading market data...</p>;
+  if (error) return <p className="text-red-600">{error}</p>;
 
   return (
-    <div className=" flex flex-col gap-6 p-4 rounded-xl shadow-md w-full max-w-4x mx-auto mt-6">
-      <h2 className="text-xl font-bold mb-4 text-center">Top Performing Cryptocurrencies (24h)</h2>
+    <div className="flex flex-col gap-6 p-4 rounded-xl shadow-md w-full mx-auto mt-6">
+      <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-        {topCryptos.map(coin => (
-          <div key={coin.id} className=" p-3 rounded shadow bg-[#fcfcfc hover:shadow-lg transition">
-            <div className="flex items-center gap-2 mb-2">
-              <img src={coin.image} alt={coin.name} className="w-5 h-5" />
-              <span className="font-semibold">{coin.name}</span>
-              <span className="text-gray-400">({coin.symbol.toUpperCase()})</span>
-            </div>
-            <div className="text-gray-700">Price: ${coin.current_price.toLocaleString()}</div>
-            <div className={`font-medium ${coin.price_change_percentage_24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              24h: {coin.price_change_percentage_24h.toFixed(2)}%
-            </div>
-          </div>
+        {topCryptos.map((coin) => (
+          <PriceCard
+            key={coin.id}
+            name={coin.name}
+            symbol={coin.symbol}
+            image={coin.image}
+            price={coin.current_price}
+            changePercent={coin.price_change_percentage_24h}
+          />
         ))}
       </div>
     </div>
