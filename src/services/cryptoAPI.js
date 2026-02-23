@@ -21,10 +21,10 @@ export const fetchCryptoMarketChart = (coinId = 'bitcoin',vsCurrency = 'usd', da
 
 
 //detailed market for specific coin
-  export const fetchMarketData = (coinIds =['bitcoin','etherum','solana'])=>{
+  export const fetchMarketData = (coinIds = ['bitcoin', 'ethereum', 'solana'], vsCurrency = 'usd')=>{
     return axios.get(`${BASE_URL}/coins/markets`,{
       params:{
-        vs_currency: 'usd',
+      vs_currency: vsCurrency,
       ids: coinIds.join(','),
       order: 'market_cap_desc',
       per_page: coinIds.length,

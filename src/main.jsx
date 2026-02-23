@@ -8,7 +8,6 @@ import { ToggleProvider } from './context/ToggleContext.jsx'
 import './chartSetup.js'
 import { WatchlistProvider } from './context/WatchListContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
-import SideBar from './components/SideBar.jsx'
 import SideBarProvider from './context/SideBarContext.jsx'
 import { CryptoMarketProvider } from './context/CryptoMarketContext.jsx'
 

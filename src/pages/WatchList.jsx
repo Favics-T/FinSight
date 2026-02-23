@@ -2,7 +2,7 @@ import React from 'react';
 import { useWatchlist } from '../context/WatchListContext';
 
 const WatchList = () => {
-  const { watchlist, coinsData, toggleWatchlist, loading, error } = useWatchlist();
+  const { coinsData, toggleWatchlist, loading, error } = useWatchlist();
 
   return (
     <div className="p-4">
@@ -26,7 +26,7 @@ const WatchList = () => {
               <span> <span className='font-extrabold'>Market Cap:</span>  ${coin.market_cap.toLocaleString()}</span>
             </div>
             <button
-              onClick={() => toggleWatchlist(coin.id)}
+              onClick={() => toggleWatchlist(coin)}
               className="bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded"
             >
               Remove

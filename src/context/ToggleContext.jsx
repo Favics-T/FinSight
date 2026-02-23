@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react'
 const ToggleContext = createContext();
 
 export const ToggleProvider = ( {children} ) => {
-    const [mode,setMode] = useState('');
+    const [mode,setMode] = useState('crypto');
 
     const toggleMode = ()=>{
         setMode(prev => (prev === "stock"? "crypto":"stock")
@@ -12,11 +12,9 @@ export const ToggleProvider = ( {children} ) => {
     }
 
   return (
-    <div>
-      <ToggleContext.Provider value={{mode,toggleMode,setMode}}>
-        {children}
-      </ToggleContext.Provider>
-    </div>
+    <ToggleContext.Provider value={{mode,toggleMode,setMode}}>
+      {children}
+    </ToggleContext.Provider>
   )
 }
 

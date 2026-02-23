@@ -59,7 +59,7 @@ export const WatchlistProvider = ({ children }) => {
     };
 
     fetchCoins();
-  }, [watchlist]);
+  }, [watchlist, coinsData]);
 
   // Toggle a coin in/out of watchlist using full coin object
   const toggleWatchlist = (coin) => {

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { getStockQuote, getStockDaily, handleStockSymbolSearch } from "../services/stockAPI";
 
 const DataContext = createContext();
@@ -16,16 +16,16 @@ export const DataProvider = ({ children }) => {
   
  
 
-      const fetchStockQuote = async (symbol) => {
+  const fetchStockQuote = useCallback(async (symbol) => {
     try {
       const response = await getStockQuote(symbol);
       setStockData(response.data['Global Quote']);
     } catch (error) {
       console.error('Error fetching stock quote:', error);
     }
-  };
+  }, []);
 
-  const fetchMultipleStockQuotes = async (symbols)=>{
+  const fetchMultipleStockQuotes = useCallback(async (symbols)=>{
     try{
       const results = {};
 
@@ -37,20 +37,20 @@ export const DataProvider = ({ children }) => {
     }
     catch(error){
       setError('Error fetching data, turn off your airplane mode')
-      console.error('error fetching data')
+      console.error('error fetching data', error)
     }
-  }
+  }, []);
 
-  const fetchStockDaily = async (symbol) => {
+  const fetchStockDaily = useCallback(async (symbol) => {
     try {
       const response = await getStockDaily(symbol);
       setDailyData(response.data['Time Series (Daily)']);
     } catch (error) {
       console.error('Error fetching daily stock data:', error);
     }
-  };
+  }, []);
 
-  const searchStock = async (keyword) => {
+  const searchStock = useCallback(async (keyword) => {
     try {
       const response = await handleStockSymbolSearch(keyword);
       setSearchResults(response.data.bestMatches || []);
@@ -58,15 +58,52 @@ export const DataProvider = ({ children }) => {
       console.error('Error searching stock:', error);
       setError('Stock not found')
     }
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      setStockData,
+      dailyData,
+      setDailyData,
+      searchResults,
+      fetchMultipleStockQuotes,
+      setSearchResults,
+      stockData,
+      assetData,
+      setAssetData,
+      chartData,
+      setChartData,
+      stocksData,
+      setStocksData,
+      loading,
+      setLoading,
+      error,
+      setError,
+      mode,
+      setMode,
+      fetchStockDaily,
+      fetchStockQuote,
+      searchStock,
+    }),
+    [
+      dailyData,
+      searchResults,
+      fetchMultipleStockQuotes,
+      stockData,
+      assetData,
+      chartData,
+      stocksData,
+      loading,
+      error,
+      mode,
+      fetchStockDaily,
+      fetchStockQuote,
+      searchStock,
+    ]
+  );
 
   return (
-    <DataContext.Provider value={{ setStockData,dailyData,
-                                 setDailyData, searchResults,fetchMultipleStockQuotes,
-                                  setSearchResults, stockData,assetData, 
-                                  setAssetData, chartData, setChartData,stocksData,setStocksData, 
-                                  loading, setLoading, error, setError,mode,setMode,
-                                  fetchStockDaily,fetchStockQuote,searchStock }}>
+    <DataContext.Provider value={value}>
       {children}
     </DataContext.Provider>
   );

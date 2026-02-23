@@ -2,7 +2,7 @@ import React from 'react'
 import { useToggle } from '../context/ToggleContext'
 import { Link,useLocation } from 'react-router-dom';
 const ToglleButton = () => {
-    const {mode, toggleMode,setMode } = useToggle();
+    const { setMode } = useToggle();
     const location = useLocation();
   return (
    <div 

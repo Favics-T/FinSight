@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { useSearch } from "../context/SearchContext";
 import { useToggle } from '../context/ToggleContext';
-import { debounce } from 'chart.js/helpers';
+import { debounce } from '../util/debounce';
 
 const SearchBar = () => {
   const [input, setInput] = useState('');
@@ -30,17 +30,17 @@ const SearchBar = () => {
     }
   };
 
-  const debouncedSearch = useCallback(
-    debounce((value) => {
-      if (value.trim()) {
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value) => {
+        if (!value.trim()) return;
         if (mode === 'stock') {
           handleStockSearch(value);
         } else {
           handleCryptoSearch(value);
         }
-      }
-    }, 500),
-    [mode]
+      }, 500),
+    [mode, handleStockSearch, handleCryptoSearch]
   );
 
   const handleSelect = () => {
@@ -49,18 +49,14 @@ const SearchBar = () => {
 };
 
 const highlightMatch = (text) => {
-  const regex = new RegExp(`(${input})`, 'i');
+  if (!input.trim()) return text;
+  const escaped = input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'ig');
   return text.replace(regex, '<mark>$1</mark>');
 };
 
-  // const handleInputChange = (e) => {
-  //   setInput(e.target.value);
-  //   if (!view) setView(true); 
-  //   searchStock(e.target.value); 
-  // };
-
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full max-w-md text-black">
       
       <label className="relative block">
         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer" onClick={handleSearch}>
@@ -95,10 +91,10 @@ const highlightMatch = (text) => {
       </label>
      
      
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {loading && <p className="text-white">Loading...</p>}
+      {error && <p className="text-red-400">{error}</p>}
      {view && searchResults && searchResults.length > 0 && (
-  <div className='absolute  border border-gray-300 rounded-md mt-1 md:w-full   max-h-96 overflow-auto z-10 shadow-lg'>
+  <div className='absolute bg-white border border-gray-300 rounded-md mt-1 md:w-full max-h-96 overflow-auto z-10 shadow-lg'>
     {mode === 'stock' ? (
       searchResults.map((result, index) => (
         <Link 
@@ -112,9 +108,6 @@ const highlightMatch = (text) => {
                       __html: highlightMatch(`${result['2. name']} (${result['1. symbol']})`)
                     }}
                   />
-        <div  className='p-2 hover:bg-gray-200 cursor-pointer'>
-          {result['2. name']} ({result['1. symbol']})
-        </div>
         </Link>
       ))
     ) : (

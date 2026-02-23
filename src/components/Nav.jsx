@@ -1,13 +1,8 @@
-import React, { useState,useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { FaChartLine } from "react-icons/fa6";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
-import DataContext from '../context/DataContext';
 import SearchBar from './SearchBar';
-import { ThemeContext } from '../context/ThemeContext';
-import { SiDbeaver } from 'react-icons/si';
-import SideBar from './SideBar'
 import { MdViewSidebar } from "react-icons/md";
 import { SideBarContext } from '../context/SideBarContext';
 import { Link } from 'react-router-dom';
@@ -15,8 +10,6 @@ import { Link } from 'react-router-dom';
 
 const Nav = () => {
 
-const {theme, toggleTheme} = useContext(ThemeContext)
-const [search, setSearch] = useState("");
 const [view, setView] = useState(false);
 
 const dropDown = useRef(null);
@@ -34,8 +27,7 @@ useEffect(()=>{
 },[view])
 
                               
-const  {SideBarList} = useContext(SideBarContext);
-console.log(SideBarList);
+const { SideBarList } = useContext(SideBarContext);
 
 
 
@@ -76,7 +68,7 @@ console.log(SideBarList);
      {
               view &&(
                 <div ref={dropDown}>
-                  <div className='absolute right-0 md:hidden'>
+                  <div className='absolute right-0 md:hidden z-20'>
 <ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-blue-400 text-white  px-6 items-center gap-4'>
 {/* <SearchBar className=''/> */}
 <SearchBar />

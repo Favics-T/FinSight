@@ -8,6 +8,8 @@ import { useWatchlist } from "../context/WatchListContext";
 import TopPerformingCrypto from "../components/TopPerformingCrypto";
 import Watchlist from "../components/WatchList";
 
+const COIN_IDS = ["bitcoin", "ethereum", "solana", "dogecoin"];
+
 // Skeleton Loader Component
 const SkeletonCard = () => (
   <div className="animate-pulse p-4 border bg-gray-100 rounded shadow flex flex-col gap-4">
@@ -31,12 +33,11 @@ const CryptoDashboard = () => {
   const [view, setView] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const coinIds = ["bitcoin", "ethereum", "solana", "dogecoin"];
   const { coinsData } = useWatchlist();
 
   useEffect(() => {
     setLoading(true);
-    fetchMarketData(coinIds, currency)
+    fetchMarketData(COIN_IDS, currency)
       .then((response) => {
         setTopCoinsData(response.data);
         setLoading(false);

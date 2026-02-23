@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { handleStockSymbolSearch } from "../services/stockAPI";
 export const SearchContext = createContext();
 import { searchCoins } from "../services/cryptoAPI";
@@ -10,7 +10,7 @@ export const SearchProvider = ({ children }) => {
 
 
   //Stock Search
-  const handleStockSearch = async (keyword)=>{
+  const handleStockSearch = useCallback(async (keyword)=>{
     if(!keyword.trim())
       return;
     setError(null);
@@ -27,11 +27,11 @@ export const SearchProvider = ({ children }) => {
     finally{
       setLoading(false)
     }
-  }
+  }, []);
 
   //crypto search
 
-  const handleCryptoSearch = async(keyword)=>{
+  const handleCryptoSearch = useCallback(async(keyword)=>{
     if(!keyword.trim())
       return;
     setError(null);
@@ -40,7 +40,7 @@ export const SearchProvider = ({ children }) => {
       const response = await searchCoins(keyword);
       setSearchResults(response.data.coins || [])
     }
-    catch(err){
+    catch(error){
       setError("Error loading crypto coins");
       console.error("Crypto search failed", error)
     }
@@ -48,14 +48,23 @@ export const SearchProvider = ({ children }) => {
       setLoading(false)
     }
 
-  }
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      searchResults,
+      setSearchResults,
+      handleStockSearch,
+      error,
+      setError,
+      loading,
+      handleCryptoSearch,
+    }),
+    [searchResults, handleStockSearch, error, loading, handleCryptoSearch]
+  );
 
   return (
-    <SearchContext.Provider value={{ 
-                                      searchResults, setSearchResults,handleStockSearch,
-                                      error, setError,loading,handleCryptoSearch
-       
-                                        }}>
+    <SearchContext.Provider value={value}>
       {children}
     </SearchContext.Provider>
   );
