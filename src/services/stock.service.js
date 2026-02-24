@@ -20,7 +20,6 @@ export async function getStockQuotes(symbols = []) {
   const output = [];
   for (const symbol of symbols) {
     // Alpha Vantage free tier has strict rate limits, keep sequential.
-    // eslint-disable-next-line no-await-in-loop
     const item = await getStockQuote(symbol);
     output.push(item);
   }

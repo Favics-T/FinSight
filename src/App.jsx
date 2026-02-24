@@ -1,63 +1,49 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
-import Nav from './components/Nav';
-import DashBoard from './pages/DashBoard';
-import Market from './pages/Market';
-import WatchList from './pages/WatchList';
-import Home from './pages/Home';
-import SideBar from './components/SideBar'
-import StockDashboard from './pages/StockDashboard';
-import CryptoDashboard from './pages/CryptoDashboard';
-import DashboardHeader from './components/DashboardHeader';
-import CryptoDetail from './pages/CryptoDetail';
-import StockDetail from './pages/StockDetail';
-import CryptoList from './pages/CryptoList';
-import Portfolio from './pages/Portfolio';
-import Settings from './pages/Settings';
+import React, { lazy } from 'react';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout';
+import ErrorBoundary from './components/boundaries/ErrorBoundary';
+import AppSuspense from './components/boundaries/AppSuspense';
 
-const Layout = () => {
-  return (
-    <div className="flex flex-col min-h-screen app-shell">
-      <Nav />
+const DashboardPage = lazy(() => import('./features/dashboard/pages/DashboardPage'));
+const CryptoDashboardPage = lazy(() => import('./features/crypto/pages/CryptoDashboardPage'));
+const StockDashboardPage = lazy(() => import('./features/stocks/pages/StockDashboardPage'));
+const MockDataPage = lazy(() => import('./features/mock/pages/MockDataPage'));
 
-      <div className="flex flex-1 w-full max-w-[1600px] mx-auto">
-        <SideBar />
-
-        <div className="flex-1 md:ml-[19%] md:px-10 px-3 pb-10">
-          <DashboardHeader />
-          <main className="page-enter">
-            <Outlet />
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+const CryptoDetail = lazy(() => import('./pages/CryptoDetail'));
+const StockDetail = lazy(() => import('./pages/StockDetail'));
+const CryptoList = lazy(() => import('./pages/CryptoList'));
+const WatchList = lazy(() => import('./pages/WatchList'));
 
 const App = () => {
   return (
-    <div className='text-white min-h-screen'>
-      <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="dashboard" element={<DashBoard />} />
-          <Route path="market" element={<Market />} />
-          <Route path="watchlist" element={<WatchList />} />
-          <Route path='stockdashboard' element={<StockDashboard />} />
-          <Route path='cryptodashboard' element={<CryptoDashboard />}/>
-          <Route path="/crypto/:id" element={<CryptoDetail />} />
-          <Route path='/stock/:symbol' element={<StockDetail />}/>
-          <Route path='/cryptolist' element={<CryptoList />} />
-          <Route path='/portfolio' element={<Portfolio />}/>
-          <Route path='/settings' element={<Settings />}/>
-        </Route>
-      </Routes>
-    </Router>
-    </div>
-  )
-}
+    <Router>
+      <ErrorBoundary>
+        <AppSuspense>
+          <Routes>
+            <Route path="/" element={<AppLayout />}>
+              <Route index element={<Navigate to="/dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="crypto" element={<CryptoDashboardPage />} />
+              <Route path="stocks" element={<StockDashboardPage />} />
+              <Route path="mock" element={<MockDataPage />} />
 
-export default App
+              <Route path="cryptolist" element={<CryptoList />} />
+              <Route path="watchlist" element={<WatchList />} />
+              <Route path="crypto/:id" element={<CryptoDetail />} />
+              <Route path="stock/:symbol" element={<StockDetail />} />
+
+              {/* Backwards compatibility routes */}
+              <Route path="cryptodashboard" element={<Navigate to="/crypto" replace />} />
+              <Route path="stockdashboard" element={<Navigate to="/stocks" replace />} />
+              <Route path="market" element={<Navigate to="/dashboard" replace />} />
+              <Route path="home" element={<Navigate to="/dashboard" replace />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Route>
+          </Routes>
+        </AppSuspense>
+      </ErrorBoundary>
+    </Router>
+  );
+};
+
+export default App;

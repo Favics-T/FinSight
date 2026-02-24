@@ -1,46 +1,140 @@
-# FinSight –  Financial Dashboard for stock and crypto market
+# FinSight
 
-FinSight is a real-time financial dashboard built with React and Chart.js that lets you monitor stock and cryptocurrency prices, trends, and key market metrics in one place. Designed for ease of use and responsiveness, it's ideal for analysts, investors, or anyone who wants to stay updated on the market.
+A modern crypto + stock dashboard built with React and Vite, now organized with a clean architecture foundation.
 
-##  Features
+## Architecture
 
--  **Search Bar with Autocomplete**  
-  Search for stocks and cryptocurrencies with live suggestions as you type.
+The project is now structured around explicit layers:
 
--  **Crypto Price Display**  
-  See current price, 24-hour change, market cap, and trading volume using the CoinGecko API.
+```text
+src/
+  components/
+    boundaries/
+      AppSuspense.jsx
+      ErrorBoundary.jsx
+    layout/
+      AppHeader.jsx
+      AppLayout.jsx
+      AppSidebar.jsx
+    ui/
+      Button.jsx
+      Card.jsx
+      Skeleton.jsx
+      Table.jsx
+      Toast.jsx
 
--  **Line Chart Visualization**  
-  View a 7-day price trend for any selected asset using Chart.js.
+  features/
+    dashboard/pages/DashboardPage.jsx
+    crypto/pages/CryptoDashboardPage.jsx
+    stocks/pages/StockDashboardPage.jsx
+    mock/pages/MockDataPage.jsx
 
--  **Dark Mode Toggle**  
-  Switch between light and dark themes for a better viewing experience.
+  hooks/
+    useTheme.js
+    useToast.js
 
--  **Currency Converter **  
-  Convert crypto prices to multiple fiat currencies.
+  lib/
+    fetchClient.js
 
--  **Asset Comparison **  
-  Compare the trends of two or more assets on a single chart.
+  providers/
+    AppProviders.jsx
 
-##  Tech Stack
+  services/
+    crypto.service.js
+    stock.service.js
+    mockData.service.js
 
-- **Frontend**: React + Vite
-- **Styling**: Tailwind CSS
-- **Charts**: Chart.js via react-chartjs-2
-- **APIs**:
-  - [CoinGecko API](https://www.coingecko.com/en/api)
-  - [Alpha Vantage API](https://www.alphavantage.co/documentation/) (for stocks)
+  store/
+    theme-store.jsx
+    toast-store.jsx
+    ui-store.jsx
 
-##  Responsive Design
+  types/
+    api.js
 
-Fully responsive layout optimized for both mobile and desktop devices.
+  App.jsx
+  main.jsx
+```
 
-other dependencies used - chart js and react chart js-2
+## What Was Implemented
 
-##  Installation
+- Theme provider (dark/light):
+  - `src/store/theme-store.jsx`
+  - `src/hooks/useTheme.js`
+- Layout system with sidebar + header:
+  - `src/components/layout/AppLayout.jsx`
+  - `src/components/layout/AppSidebar.jsx`
+  - `src/components/layout/AppHeader.jsx`
+- Reusable primitives:
+  - `src/components/ui/Button.jsx`
+  - `src/components/ui/Card.jsx`
+  - `src/components/ui/Table.jsx`
+  - `src/components/ui/Skeleton.jsx`
+- Toast system:
+  - `src/store/toast-store.jsx`
+  - `src/components/ui/Toast.jsx`
+  - `src/hooks/useToast.js`
+- Error boundary + suspense boundary:
+  - `src/components/boundaries/ErrorBoundary.jsx`
+  - `src/components/boundaries/AppSuspense.jsx`
+- Type-safe API service layer (runtime parsing + typed JSDoc models):
+  - `src/types/api.js`
+  - `src/services/crypto.service.js`
+  - `src/services/stock.service.js`
+- Centralized fetch client:
+  - `src/lib/fetchClient.js`
+- Example mock data service:
+  - `src/services/mockData.service.js`
+  - `src/features/mock/pages/MockDataPage.jsx`
+
+## Routing
+
+Core routes now use lazy loading + suspense in `src/App.jsx`:
+
+- `/dashboard` - overview dashboard (cards + tables)
+- `/crypto` - crypto dashboard
+- `/stocks` - stock dashboard
+- `/mock` - mock service demo page
+
+Backwards compatibility redirects are also included for old paths (`/cryptodashboard`, `/stockdashboard`, etc.).
+
+## Setup
+
+1. Install dependencies:
 
 ```bash
-git clone https://github.com/your-username/finSight.git
-cd finSight
 npm install
+```
+
+2. Add env file:
+
+```bash
+# .env
+VITE_ALPHA_VANTAGE_API_KEY=your_key_here
+```
+
+3. Start development server:
+
+```bash
 npm run dev
+```
+
+4. Build for production:
+
+```bash
+npm run build
+```
+
+## Linting
+
+```bash
+npm run lint
+```
+
+The project uses a centralized ESLint config in `eslint.config.js` with React hooks and refresh rules.
+
+## Notes
+
+- Alpha Vantage free tier is rate-limited; stock quote aggregation intentionally runs sequentially.
+- CoinGecko powers crypto market and chart data.
+- Existing legacy pages remain available and are integrated through the new app shell.

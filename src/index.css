@@ -14,6 +14,15 @@
   --danger: #ef4444;
 }
 
+[data-theme="light"] {
+  --bg-primary: #edf4ff;
+  --bg-secondary: #f8fbff;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-border: rgba(31, 66, 135, 0.2);
+  --text-primary: #0f1f3f;
+  --text-muted: #4f6488;
+}
+
 * {
   box-sizing: border-box;
 }

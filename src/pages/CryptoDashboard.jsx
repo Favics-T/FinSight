@@ -10,53 +10,101 @@ import TopPerformingCrypto from "../components/TopPerformingCrypto";
 import Watchlist from "../components/WatchList";
 import PriceCard from "../components/PriceCard";
 import { useTimeframe } from "../context/TimeframeContext";
+import { CardSkeleton, Skeleton } from "../components/ui/Skeleton";
+import { getMockDashboardData } from "../services/mockData.service";
+import { useToast } from "../hooks/useToast";
 
 const COIN_IDS = ["bitcoin", "ethereum", "solana", "dogecoin"];
 
-const SkeletonCard = () => (
-  <div className="animate-pulse p-4 border border-white/10 bg-white/5 rounded-xl flex flex-col gap-4 h-36" />
+const DashboardSkeleton = () => (
+  <div className="w-full space-y-4">
+    <div className="grid md:grid-cols-3 gap-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <CardSkeleton key={i} />
+      ))}
+    </div>
+    <div className="glass rounded-2xl p-4 md:p-6 space-y-3">
+      <Skeleton className="h-6 w-40" />
+      <div className="grid md:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <CardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+    <div className="glass rounded-2xl p-4 md:p-6 space-y-3">
+      <Skeleton className="h-6 w-52" />
+      <Skeleton className="h-[280px] w-full" />
+    </div>
+  </div>
 );
 
 const CryptoDashboard = () => {
   const [topCoinsData, setTopCoinsData] = useState([]);
   const [searchedCoinData, setSearchedCoinData] = useState(null);
-  const [error, setError] = useState(null);
   const [currency, setCurrency] = useState("usd");
   const [inputCoin, setInputCoin] = useState("");
   const [view, setView] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pageError, setPageError] = useState(null);
+  const [converterError, setConverterError] = useState(null);
   const { coinsData } = useWatchlist();
   const { timeframe, cryptoDays } = useTimeframe();
+  const { pushToast } = useToast();
 
   useEffect(() => {
     setLoading(true);
+    setPageError(null);
+
     fetchMarketData(COIN_IDS, currency)
       .then((response) => {
         setTopCoinsData(response.data);
         setLoading(false);
       })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
+      .catch(async () => {
+        try {
+          const mock = await getMockDashboardData();
+          const normalized = mock.crypto.map((item) => ({
+            id: item.id,
+            symbol: item.symbol,
+            name: item.name,
+            current_price: item.currentPrice,
+            market_cap: item.marketCap,
+            total_volume: 0,
+            price_change_percentage_24h: item.change24h,
+            image: `https://dummyimage.com/64x64/1f2937/ffffff.png&text=${item.symbol.toUpperCase()}`,
+          }));
+          setTopCoinsData(normalized);
+          setPageError("Live market API unavailable. Showing cached mock data.");
+          pushToast({
+            variant: "error",
+            title: "Network issue",
+            description: "Live crypto API failed, mock data loaded.",
+          });
+        } catch {
+          setPageError("Unable to load crypto market data.");
+        } finally {
+          setLoading(false);
+        }
       });
-  }, [currency]);
+  }, [currency, pushToast]);
 
   useEffect(() => {
     if (!inputCoin.trim()) {
       setSearchedCoinData(null);
+      setConverterError(null);
       return;
     }
 
-    setError(null);
+    setConverterError(null);
     fetchMarketData([inputCoin.toLowerCase()], currency)
       .then((response) => {
         if (response.data.length === 0) {
-          setError("Coin not found");
+          setConverterError("Coin not found");
           return;
         }
         setSearchedCoinData(response.data[0]);
       })
-      .catch((err) => setError(err.message));
+      .catch(() => setConverterError("Could not fetch this coin right now."));
   }, [inputCoin, currency]);
 
   const summaryStats = useMemo(() => {
@@ -79,15 +127,15 @@ const CryptoDashboard = () => {
   return (
     <div className="flex justify-center items-center flex-col overflow-x-hidden p-2 md:p-4 w-full gap-6">
       {loading ? (
-        <div className="w-full max-w-6xl grid md:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : error ? (
-        <p className="text-red-400 text-center font-semibold">{error}</p>
+        <DashboardSkeleton />
       ) : (
         <>
+          {pageError ? (
+            <div className="w-full glass rounded-xl p-3 border border-yellow-400/40">
+              <p className="text-yellow-200 text-sm">{pageError}</p>
+            </div>
+          ) : null}
+
           <motion.section
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -219,6 +267,7 @@ const CryptoDashboard = () => {
                       <p className="text-sm text-muted">Type a coin id to preview conversion.</p>
                     )}
                   </div>
+                  {converterError ? <p className="text-xs text-red-300">{converterError}</p> : null}
                 </div>
 
                 <Button name="Proceed to Wallet" className="font-semibold" />
