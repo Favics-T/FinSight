@@ -1,27 +1,26 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Button = ( {name,path,onClick,className} ) => {
-    const navigate = useNavigate();
+const Button = ({ name, path, onClick, className, type = 'button' }) => {
+  const navigate = useNavigate();
 
-    const handleClick=()=>{
-        if(onClick){
-            onClick();
-        }
-        else if(path){
-        navigate(path);
-        }
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else if (path) {
+      navigate(path);
     }
-  return (
-    <div>
-      <button
-      className={`border border-blue-600 hover:bg-blue-800 px-2 py-1 rounded-lg ${className}`}
-      onClick={handleClick}
-      >
-            {name}
-      </button>
-    </div>
-  )
-}
+  };
 
-export default Button
+  return (
+    <button
+      type={type}
+      className={`border border-blue-400/40 bg-white/5 hover:bg-blue-500/25 px-3 py-1.5 rounded-lg transition ${className || ''}`}
+      onClick={handleClick}
+    >
+      {name}
+    </button>
+  );
+};
+
+export default Button;
