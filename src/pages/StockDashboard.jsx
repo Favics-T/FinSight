@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import DataContext from '../context/DataContext';
 import { fetchExchangeRate } from '../services/stockAPI';
 import StockBarChart from '../charts/StockBarChart';
@@ -38,13 +39,13 @@ const StockDashboard = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="mb-2">
+      <div className="glass rounded-2xl p-4 md:p-5">
         <label htmlFor="stock-currency" className="block font-semibold mb-2">
           Convert USD to:
         </label>
         <select
           id="stock-currency"
-          className="border px-3 py-2 rounded text-black"
+          className="border border-white/15 bg-[#13213f] px-3 py-2 rounded"
           onChange={(e) => setCurrency(e.target.value)}
           value={currency}
         >
@@ -58,7 +59,7 @@ const StockDashboard = () => {
       {!exchangeRate ? (
         <p>Loading exchange rate...</p>
       ) : (
-        <div className="grid md:grid-cols-4 gap-4">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid md:grid-cols-4 gap-4">
           {stockEntries.map(([symbol, data]) => {
             const priceUSD = parseFloat(data?.['05. price']);
             const changePercent = parseFloat(
@@ -80,17 +81,17 @@ const StockDashboard = () => {
                   currency={currency.toLowerCase()}
                   className={selectedSymbol === symbol ? 'ring-2 ring-blue-500' : ''}
                 >
-                  <p className="text-xs text-gray-600">
+                  <p className="text-xs text-blue-100/80 mt-2">
                     USD: {Number.isFinite(priceUSD) ? priceUSD.toFixed(2) : '--'}
                   </p>
                 </PriceCard>
               </button>
             );
           })}
-        </div>
+        </motion.div>
       )}
 
-      <div className="border rounded p-4">
+      <div className="glass rounded-2xl p-4">
         <h2 className="font-semibold mb-3">Trend: {selectedSymbol}</h2>
         <StockBarChart symbol={selectedSymbol} />
       </div>

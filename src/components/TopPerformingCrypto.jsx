@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { fetchTopCryptos } from '../services/cryptoAPI';
 import PriceCard from './PriceCard';
 
@@ -29,9 +30,15 @@ const TopPerformingCrypto = ({ title = "Top Performing Cryptocurrencies (24h)", 
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (
-    <div className="flex flex-col gap-6 p-4 rounded-xl shadow-md w-full mx-auto mt-6">
-      <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+    <motion.section
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col gap-6 p-4 rounded-2xl glass w-full mx-auto mt-6"
+    >
+      <h2 className="text-xl font-bold text-center">{title}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
         {topCryptos.map((coin) => (
           <PriceCard
             key={coin.id}
@@ -43,7 +50,7 @@ const TopPerformingCrypto = ({ title = "Top Performing Cryptocurrencies (24h)", 
           />
         ))}
       </div>
-    </div>
+    </motion.section>
   );
 };
 
