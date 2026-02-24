@@ -7,6 +7,7 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/crypto', label: 'Crypto' },
   { to: '/stocks', label: 'Stocks' },
+  { to: '/portfolio', label: 'Portfolio' },
   { to: '/mock', label: 'Mock Data' },
 ];
 

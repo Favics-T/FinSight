@@ -7,6 +7,7 @@ import AppSuspense from './components/boundaries/AppSuspense';
 const DashboardPage = lazy(() => import('./features/dashboard/pages/DashboardPage'));
 const CryptoDashboardPage = lazy(() => import('./features/crypto/pages/CryptoDashboardPage'));
 const StockDashboardPage = lazy(() => import('./features/stocks/pages/StockDashboardPage'));
+const PortfolioPage = lazy(() => import('./features/portfolio/pages/PortfolioPage'));
 const MockDataPage = lazy(() => import('./features/mock/pages/MockDataPage'));
 const AssetDetailPage = lazy(() => import('./features/asset-detail/pages/AssetDetailPage'));
 
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="crypto" element={<CryptoDashboardPage />} />
               <Route path="stocks" element={<StockDashboardPage />} />
+              <Route path="portfolio" element={<PortfolioPage />} />
               <Route path="mock" element={<MockDataPage />} />
 
               <Route path="cryptolist" element={<CryptoList />} />
