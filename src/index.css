@@ -1,13 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-
 @import "tailwindcss";
 
-.Inter{
+:root {
+  --bg-primary: #071126;
+  --bg-secondary: #0d1a35;
+  --surface: rgba(15, 30, 60, 0.72);
+  --surface-border: rgba(143, 178, 255, 0.25);
+  --text-primary: #e9f0ff;
+  --text-muted: #8ea6d8;
+  --accent: #4f8cff;
+  --accent-2: #2dd4bf;
+  --success: #22c55e;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(1000px 500px at -5% -5%, rgba(79, 140, 255, 0.2), transparent 60%),
+    radial-gradient(900px 500px at 110% 0%, rgba(45, 212, 191, 0.15), transparent 55%),
+    linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.Inter {
   font-family: "Inter", sans-serif;
 }
 
+.app-shell {
+  background: linear-gradient(180deg, rgba(8, 17, 36, 0.65), rgba(5, 11, 24, 0.95));
+}
+
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  backdrop-filter: blur(12px);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.page-enter {
+  animation: fadeInUp 0.45s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 /* 

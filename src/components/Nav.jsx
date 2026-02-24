@@ -1,107 +1,100 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { FaChartLine } from "react-icons/fa6";
-import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineDarkMode, MdViewSidebar } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
-import SearchBar from './SearchBar';
-import { MdViewSidebar } from "react-icons/md";
-import { SideBarContext } from '../context/SideBarContext';
 import { Link } from 'react-router-dom';
-
+import { AnimatePresence, motion } from 'framer-motion';
+import SearchBar from './SearchBar';
+import { SideBarContext } from '../context/SideBarContext';
 
 const Nav = () => {
+  const [view, setView] = useState(false);
+  const dropDown = useRef(null);
+  const { SideBarList } = useContext(SideBarContext);
 
-const [view, setView] = useState(false);
-
-const dropDown = useRef(null);
-
-useEffect(()=>{
-  const handleClickOutside = (event)=>{
-    if(dropDown.current && !dropDown.current.contains(event.target)){
-      setView(false);
-    }}
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropDown.current && !dropDown.current.contains(event.target)) {
+        setView(false);
+      }
+    };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return ()=>{
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-},[view])
-
-                              
-const { SideBarList } = useContext(SideBarContext);
-
-
-
-
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <div className='sticky top-0 relative '>
-     
-    <div className='md:px-10 px-4 font-sans md:py-5 py-2 shadow-lg flex justify-between '>
-        
-        <div className='flex gap-2 items-center  '>
-            <FaChartLine className='text-xl'/>
-            <h1 className='font-semibold Inter leading-2.5 text-xl'>FinSight</h1>
-        </div>
- {/* Logo */}
-       
-        {/* list */}
-    <div className='md:block hidden '>
-<ol className='flex items-center gap-4'>
-<SearchBar className='inline'/>
-<MdOutlineDarkMode className='text-3xl '/>
-<IoMdNotifications className='text-3xl '/>
-<div className=' p-5 rounded-full bg-gray-200 '>
-<img src="" alt="" />
-</div>
-</ol>
+    <header className="sticky top-0 relative z-40">
+      <motion.div
+        initial={{ y: -18, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="md:px-10 px-4 font-sans md:py-5 py-3 glass border-b border-white/10 flex justify-between items-center"
+      >
+        <Link to="/dashboard" className="flex gap-3 items-center">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg">
+            <FaChartLine className="text-xl" />
+          </div>
+          <div>
+            <h1 className="font-semibold Inter leading-2.5 text-xl">FinSight</h1>
+            <p className="text-xs text-muted">Crypto & Stock Intelligence</p>
+          </div>
+        </Link>
 
-
-        </div>
-
-        <div className='md:hidden block cursor-pointer' onClick={()=>setView(!view)}>
-            <MdViewSidebar  className='text-3xl text-blue-600'/>
-           
-        </div>
-        
-    </div>
-
-     {
-              view &&(
-                <div ref={dropDown}>
-                  <div className='absolute right-0 md:hidden z-20'>
-<ol className='flex flex-col border  py-3 border-gray-500 rounded-lg shadow-lg bg-blue-400 text-white  px-6 items-center gap-4'>
-{/* <SearchBar className=''/> */}
-<SearchBar />
-{/* <div className=' md:p-5 p-2 rounded-full bg-gray-200 '>
-<img src="" alt="" />
-</div> */}
-{/* <button
-onClick={toggleTheme}
->
-    <MdOutlineDarkMode className='md:text-3xl text-sm '/>
-  </button> */}
-{/* <IoMdNotifications className='md:text-3xl text-sm '/> */}
- <div className="space-y-4 ">
-       {
-        SideBarList.map(({title,path})=>(
-          <div key={path}>
-              <Link to={path}>
-                 <h1>{title}</h1>
-              </Link>
-             
+        <div className="md:block hidden">
+          <ol className="flex items-center gap-4">
+            <SearchBar />
+            <button className="h-10 w-10 rounded-xl border border-white/15 bg-white/5 flex items-center justify-center hover:bg-white/10 transition">
+              <MdOutlineDarkMode className="text-2xl" />
+            </button>
+            <button className="h-10 w-10 rounded-xl border border-white/15 bg-white/5 flex items-center justify-center hover:bg-white/10 transition">
+              <IoMdNotifications className="text-2xl" />
+            </button>
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-400 flex items-center justify-center font-semibold">
+              FS
             </div>
-        ))
-       }
-      </div>
-</ol>
-
-
+          </ol>
         </div>
-                </div>
-              )
-            }
-    </div>
-  )
-}
 
-export default Nav
+        <button
+          type="button"
+          className="md:hidden block cursor-pointer"
+          onClick={() => setView((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          <MdViewSidebar className="text-3xl text-blue-300" />
+        </button>
+      </motion.div>
+
+      <AnimatePresence>
+        {view && (
+          <motion.div
+            ref={dropDown}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute right-2 left-2 md:hidden z-20"
+          >
+            <ol className="flex flex-col glass py-3 rounded-xl shadow-lg px-4 gap-4 mt-2">
+              <SearchBar />
+              <div className="space-y-2">
+                {SideBarList.map(({ title, path }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    className="block p-2 rounded-lg hover:bg-white/10 transition"
+                  >
+                    {title}
+                  </Link>
+                ))}
+              </div>
+            </ol>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
+
+export default Nav;

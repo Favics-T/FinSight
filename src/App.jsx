@@ -17,27 +17,27 @@ import Settings from './pages/Settings';
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen ">
-  <Nav />
-  
-  <div className="flex flex-1 w-full">
-    <SideBar />
+    <div className="flex flex-col min-h-screen app-shell">
+      <Nav />
 
-    <div className="flex-1 md:ml-[19%] md:px-10 px-2">
-      <DashboardHeader />
-      <Outlet />
+      <div className="flex flex-1 w-full max-w-[1600px] mx-auto">
+        <SideBar />
+
+        <div className="flex-1 md:ml-[19%] md:px-10 px-3 pb-10">
+          <DashboardHeader />
+          <main className="page-enter">
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   );
 };
 
 
 const App = () => {
   return (
-    <div className='bg-[#030d24] text-white'>
-      
+    <div className='text-white min-h-screen'>
       <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
