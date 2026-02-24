@@ -14,14 +14,18 @@ export const formatCryptoChartData = (prices) => {
   };
 };
 
-export const formatStockChartData = (dailyData) => {
-  const dates = Object.keys(dailyData).slice(0, 7).reverse();
+export const formatStockChartData = (dailyData, points = 7) => {
+  const orderedDates = Object.keys(dailyData);
+  const selectedDates =
+    points === 'all' ? orderedDates : orderedDates.slice(0, Math.max(2, Number(points) || 7));
+  const dates = selectedDates.reverse();
+
   return {
-    labels: dates,
+    labels: dates.map((date) => new Date(date).toLocaleDateString()),
     datasets: [
       {
         label: 'Stock Price (USD)',
-        data: dates.map(date => dailyData[date]['4. close']),
+        data: dates.map(date => Number(dailyData[date]['4. close'])),
         borderColor: '#10b981',
         fill: false,
       },

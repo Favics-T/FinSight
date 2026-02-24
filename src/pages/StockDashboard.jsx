@@ -4,12 +4,14 @@ import DataContext from '../context/DataContext';
 import { fetchExchangeRate } from '../services/stockAPI';
 import StockBarChart from '../charts/StockBarChart';
 import PriceCard from '../components/PriceCard';
+import { useTimeframe } from '../context/TimeframeContext';
 
 const StockDashboard = () => {
   const { stocksData, fetchMultipleStockQuotes } = useContext(DataContext);
   const [exchangeRate, setExchangeRate] = useState(null);
   const [currency, setCurrency] = useState('EUR');
   const [selectedSymbol, setSelectedSymbol] = useState('AAPL');
+  const { timeframe, stockPoints } = useTimeframe();
 
   useEffect(() => {
     const fetchRate = async () => {
@@ -92,8 +94,9 @@ const StockDashboard = () => {
       )}
 
       <div className="glass rounded-2xl p-4">
-        <h2 className="font-semibold mb-3">Trend: {selectedSymbol}</h2>
-        <StockBarChart symbol={selectedSymbol} />
+        <h2 className="font-semibold mb-1">Trend: {selectedSymbol}</h2>
+        <p className="text-sm text-muted mb-3">Timeframe: {timeframe}</p>
+        <StockBarChart symbol={selectedSymbol} points={stockPoints} />
       </div>
     </div>
   );

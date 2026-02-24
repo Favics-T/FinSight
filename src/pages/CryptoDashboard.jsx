@@ -9,6 +9,7 @@ import { useWatchlist } from "../context/WatchListContext";
 import TopPerformingCrypto from "../components/TopPerformingCrypto";
 import Watchlist from "../components/WatchList";
 import PriceCard from "../components/PriceCard";
+import { useTimeframe } from "../context/TimeframeContext";
 
 const COIN_IDS = ["bitcoin", "ethereum", "solana", "dogecoin"];
 
@@ -25,6 +26,7 @@ const CryptoDashboard = () => {
   const [view, setView] = useState(null);
   const [loading, setLoading] = useState(true);
   const { coinsData } = useWatchlist();
+  const { timeframe, cryptoDays } = useTimeframe();
 
   useEffect(() => {
     setLoading(true);
@@ -149,8 +151,11 @@ const CryptoDashboard = () => {
             transition={{ duration: 0.45, delay: 0.1 }}
             className="w-full glass rounded-2xl p-4 md:p-6"
           >
-            <h1 className="font-bold text-2xl text-center mb-5">Crypto Performance</h1>
-            <CryptoChart coinId={topCoinsData[0]?.id || "bitcoin"} />
+            <h1 className="font-bold text-2xl text-center mb-1">Crypto Performance</h1>
+            <p className="text-sm text-muted text-center mb-5">
+              Timeframe: {timeframe}
+            </p>
+            <CryptoChart coinId={topCoinsData[0]?.id || "bitcoin"} days={cryptoDays} />
           </motion.section>
 
           <section className="grid md:grid-cols-3 gap-6 w-full">

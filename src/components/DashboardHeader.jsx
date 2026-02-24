@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ToglleButton from './ToglleButton';
+import { useTimeframe } from '../context/TimeframeContext';
 
 const DashboardHeader = () => {
-  const dailyTrends = ['1D', '1W', '1M', '1Y', 'All'];
-  const [activeTrend, setActiveTrend] = useState('1D');
+  const { timeframes, timeframe, setTimeframe } = useTimeframe();
 
   return (
     <motion.div
@@ -29,13 +29,13 @@ const DashboardHeader = () => {
           <ToglleButton />
 
           <div className="flex gap-2 flex-wrap">
-            {dailyTrends.map((item) => (
+            {timeframes.map((item) => (
               <button
                 key={item}
                 type="button"
-                onClick={() => setActiveTrend(item)}
+                onClick={() => setTimeframe(item)}
                 className={`px-3 py-2 rounded-lg text-sm font-semibold transition ${
-                  activeTrend === item
+                  timeframe === item
                     ? 'bg-blue-500 text-white'
                     : 'bg-white/5 border border-white/10 text-blue-100 hover:bg-white/10'
                 }`}

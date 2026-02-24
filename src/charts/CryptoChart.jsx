@@ -14,17 +14,17 @@ import {
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
-const CryptoChart = ({ coinId = 'bitcoin' }) => {
+const CryptoChart = ({ coinId = 'bitcoin', days = 7 }) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    fetchCryptoMarketChart(coinId)
+    fetchCryptoMarketChart(coinId, 'usd', days)
       .then((response) => {
         const data = formatCryptoChartData(response.data.prices);
         setChartData(data);
       })
       .catch(() => setChartData(null));
-  }, [coinId]);
+  }, [coinId, days]);
 
   const chartOptions = {
     responsive: true,

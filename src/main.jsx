@@ -10,6 +10,7 @@ import { WatchlistProvider } from './context/WatchListContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import SideBarProvider from './context/SideBarContext.jsx'
 import { CryptoMarketProvider } from './context/CryptoMarketContext.jsx'
+import { TimeframeProvider } from './context/TimeframeContext.jsx'
 
 
 
@@ -24,7 +25,9 @@ createRoot(document.getElementById('root')).render(
      <SearchProvider>
       <DataProvider>
         <CryptoMarketProvider>
+          <TimeframeProvider>
     <App />
+    </TimeframeProvider>
     </CryptoMarketProvider>
     </DataProvider>
     </SearchProvider>
