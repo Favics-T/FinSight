@@ -5,6 +5,7 @@ import { useUIStore } from '../../store/ui-store';
 import { useTheme } from '../../hooks/useTheme';
 import { Button } from '../ui/Button';
 import SearchBar from '../SearchBar';
+import GlobalSearchModal from '../search/GlobalSearchModal';
 
 export function AppHeader() {
   const { toggleSidebar } = useUIStore();
@@ -28,6 +29,7 @@ export function AppHeader() {
       </div>
 
       <div className="flex items-center gap-2">
+        <GlobalSearchModal />
         <button
           type="button"
           className="md:hidden h-9 w-9 rounded-lg border border-white/20 bg-white/5 flex items-center justify-center"

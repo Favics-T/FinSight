@@ -8,7 +8,7 @@ import { useToast } from '../../../hooks/useToast';
 import { getCryptoMarkets } from '../../../services/crypto.service';
 import { getStockQuotes } from '../../../services/stock.service';
 import { usePortfolioStore, portfolioSelectors } from '../../../store/portfolio-store';
-import { getPositionKey, validatePositionInput } from '../utils/calculations';
+import { validatePositionInput } from '../utils/calculations';
 
 const EMPTY_FORM = {
   assetType: 'stock',
