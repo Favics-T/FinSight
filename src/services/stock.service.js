@@ -52,3 +52,79 @@ export function getStockDaily(symbol) {
     (data) => (/** @type {any} */ (data))['Time Series (Daily)'] || {}
   );
 }
+
+export function getStockOverview(symbol) {
+  return requestWithParser(
+    alphaVantageClient.get('', {
+      params: {
+        function: 'OVERVIEW',
+        symbol,
+        apikey: API_KEY,
+      },
+    }),
+    (data) => {
+      const item = /** @type {any} */ (data) || {};
+      return {
+        symbol: item.Symbol || symbol,
+        name: item.Name || symbol,
+        marketCap: Number(item.MarketCapitalization || 0),
+        volume: Number(item.SharesOutstanding || 0),
+        high24h: Number(item['52WeekHigh'] || 0),
+        low24h: Number(item['52WeekLow'] || 0),
+      };
+    }
+  );
+}
+
+export function getStockOHLC(symbol, timeframe = '1M') {
+  if (timeframe === '1D') {
+    return requestWithParser(
+      alphaVantageClient.get('', {
+        params: {
+          function: 'TIME_SERIES_INTRADAY',
+          symbol,
+          interval: '60min',
+          outputsize: 'compact',
+          apikey: API_KEY,
+        },
+      }),
+      (data) => {
+        const series = /** @type {any} */ (data)?.['Time Series (60min)'] || {};
+        return Object.entries(series)
+          .map(([time, values]) => ({
+            time: new Date(time).getTime(),
+            open: Number(values['1. open']),
+            high: Number(values['2. high']),
+            low: Number(values['3. low']),
+            close: Number(values['4. close']),
+            volume: Number(values['5. volume']),
+          }))
+          .sort((a, b) => a.time - b.time);
+      }
+    );
+  }
+
+  return requestWithParser(
+    alphaVantageClient.get('', {
+      params: {
+        function: 'TIME_SERIES_DAILY',
+        symbol,
+        outputsize: 'compact',
+        apikey: API_KEY,
+      },
+    }),
+    (data) => {
+      const series = /** @type {any} */ (data)?.['Time Series (Daily)'] || {};
+      return Object.entries(series)
+        .map(([time, values]) => ({
+          time: new Date(time).getTime(),
+          open: Number(values['1. open']),
+          high: Number(values['2. high']),
+          low: Number(values['3. low']),
+          close: Number(values['4. close']),
+          volume: Number(values['5. volume']),
+        }))
+        .sort((a, b) => a.time - b.time);
+    }
+  );
+}

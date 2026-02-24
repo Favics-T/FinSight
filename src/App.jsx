@@ -8,9 +8,8 @@ const DashboardPage = lazy(() => import('./features/dashboard/pages/DashboardPag
 const CryptoDashboardPage = lazy(() => import('./features/crypto/pages/CryptoDashboardPage'));
 const StockDashboardPage = lazy(() => import('./features/stocks/pages/StockDashboardPage'));
 const MockDataPage = lazy(() => import('./features/mock/pages/MockDataPage'));
+const AssetDetailPage = lazy(() => import('./features/asset-detail/pages/AssetDetailPage'));
 
-const CryptoDetail = lazy(() => import('./pages/CryptoDetail'));
-const StockDetail = lazy(() => import('./pages/StockDetail'));
 const CryptoList = lazy(() => import('./pages/CryptoList'));
 const WatchList = lazy(() => import('./pages/WatchList'));
 
@@ -29,8 +28,8 @@ const App = () => {
 
               <Route path="cryptolist" element={<CryptoList />} />
               <Route path="watchlist" element={<WatchList />} />
-              <Route path="crypto/:id" element={<CryptoDetail />} />
-              <Route path="stock/:symbol" element={<StockDetail />} />
+              <Route path="crypto/:id" element={<AssetDetailPage />} />
+              <Route path="stock/:symbol" element={<AssetDetailPage />} />
 
               {/* Backwards compatibility routes */}
               <Route path="cryptodashboard" element={<Navigate to="/crypto" replace />} />
