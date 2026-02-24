@@ -32,9 +32,9 @@ export const CryptoMarketProvider = ({ children }) => {
 
   return (
     <CryptoMarketContext.Provider
-      value={{ marketData, loading, error }}
-    >
-      {children}
+      value={{ marketData, loading, error }}>
+        
+              {children}
     </CryptoMarketContext.Provider>
   );
 };

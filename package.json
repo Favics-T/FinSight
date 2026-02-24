@@ -1,6 +1,6 @@
 {
   "name": "finsight",
-    "private": true,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -8,12 +8,12 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
-   
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
+    "framer-motion": "^12.34.3",
     "gh-pages": "^6.3.0",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",

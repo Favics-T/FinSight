@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { useSearch } from "../context/SearchContext";
@@ -8,24 +8,33 @@ import { debounce } from '../util/debounce';
 const SearchBar = () => {
   const [input, setInput] = useState('');
     const [view, setView] = useState(false);
-  const {error,handleCryptoSearch,searchResults,
-        handleStockSearch,loading} = useSearch();
+  const {
+    error,
+    handleCryptoSearch,
+    searchResults,
+    handleStockSearch,
+    loading,
+    setSearchResults,
+  } = useSearch();
   const { mode } = useToggle();
   
-  
+  const runSearchByMode = useCallback((value) => {
+    if (mode === 'stock') {
+      handleStockSearch(value);
+    } else {
+      handleCryptoSearch(value);
+    }
+  }, [mode, handleStockSearch, handleCryptoSearch]);
 
-  
   const handleSearch = () => {
-    if (input.trim()) {
-      if(mode === 'stock'){
-          handleStockSearch(input);
-      }
-     else{
-      handleCryptoSearch(input);
-     }
+    if (input.trim().length >= 2) {
+      runSearchByMode(input);
+      debouncedSearch.cancel();
       setView(true); 
     } 
     else {
+      debouncedSearch.cancel();
+      setSearchResults([]);
       setView(false);
     }
   };
@@ -33,15 +42,16 @@ const SearchBar = () => {
   const debouncedSearch = useMemo(
     () =>
       debounce((value) => {
-        if (!value.trim()) return;
-        if (mode === 'stock') {
-          handleStockSearch(value);
-        } else {
-          handleCryptoSearch(value);
+        if (!value.trim() || value.trim().length < 2) {
+          setSearchResults([]);
+          return;
         }
-      }, 500),
-    [mode, handleStockSearch, handleCryptoSearch]
+        runSearchByMode(value);
+      }, 500, { maxWait: 1500, trailing: true }),
+    [runSearchByMode, setSearchResults]
   );
+
+  useEffect(() => () => debouncedSearch.cancel(), [debouncedSearch]);
 
   const handleSelect = () => {
   setInput('');
@@ -68,19 +78,8 @@ const highlightMatch = (text) => {
   onChange={(e) => {
     const value = e.target.value;
     setInput(value);
-    setView(true);
+    setView(value.trim().length >= 2);
     debouncedSearch(value);
-
-    // if (value.trim()) {
-    //   if (mode === 'stock') {
-    //     handleStockSearch(value);
-    //   } else {
-    //     handleCryptoSearch(value);
-    //   }
-    //   setView(true);
-    // } else {
-    //   setView(false);
-    // }
   }}
   onFocus={() => setView(true)}
   onBlur={() => setTimeout(() => setView(false), 200)}
